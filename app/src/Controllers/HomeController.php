@@ -4,10 +4,13 @@ namespace App\Controllers;
 
 class HomeController
 {
-    public function home($vars = [])
+    public function home(array $parameters = []):void
     {
-        // normally we don't want to echo from a controller method directly
-        // but rather load a view template
-        echo "Welcome home!";
+        $pageTitle = "Home Page";
+        $message ="Welcome to the Lego Mini Figures Store!";
+        
+        $contentView = __DIR__ . '/../Views/home.php';
+
+        require __DIR__ . '/../Views/layout/main.php';
     }
 }

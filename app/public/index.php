@@ -7,7 +7,12 @@
  * See the documentation for FastRoute for more information: https://github.com/nikic/FastRoute
  */
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';//FastRoute available
+
+//Session for cart/login
+if (session_status()===PHP_SESSION_NONE){
+    session_start();
+}
 
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
@@ -17,20 +22,17 @@ use function FastRoute\simpleDispatcher;
  */
 $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/', ['App\Controllers\HomeController', 'home']);
-    $r->addRoute('GET', '/hello/{name}', ['App\Controllers\HelloController', 'greet']);
+    $r->addRoute('GET', '/minifigures', ['App\Controllers\MinifigureController', 'index']);//all minifigures
+    $r->addRoute('GET', '/minifigures/{id:\d+}', ['App\Controllers\MinifigureController', 'detail']);//specific, in detail
 });
-
-
-/**
- * Get the request method and URI from the server variables and invoke the dispatcher.
- */
+// Get the request method and URI from the server variables and invoke the dispatcher
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
+
+//ask the router to find a matching route
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 
-/**
- * Switch on the dispatcher result and call the appropriate controller method if found.
- */
+// Switch on the dispatcher result and call the appropriate controller method if found
 switch ($routeInfo[0]) {
     // Handle not found routes
     case FastRoute\Dispatcher::NOT_FOUND:
@@ -44,29 +46,17 @@ switch ($routeInfo[0]) {
         break;
     // Handle found routes
     case FastRoute\Dispatcher::FOUND:
-        /**
-         * $routeInfo contains the data about the matched route.
-         * 
-         * $routeInfo[1] is the whatever we define as the third argument the `$r->addRoute` method.
-         *  For instance for: `$r->addRoute('GET', '/hello/{name}', ['App\Controllers\HelloController', 'greet']);`
-         *  $routeInfo[1] will be `['App\Controllers\HelloController', 'greet']`
-         * 
-         * Hint: we can use class strings like `App\Controllers\HelloController` to create new instances of that class.
-         * Hint: in PHP we can use a string to call a class method dynamically, like this: `$instance->$methodName($args);`
-         */
+    //routeInfo[1] = ['App\Controllers\HomeController', 'home']
+    $className = $routeInfo[1][0];
+    $methodName = $routeInfo[1][1];
 
-        // TODO: invoke the controller and method using the data in $routeInfo[1]
+    //Route parameters  /hello{name}
+    $parameters =$routeInfo[2];
 
-        /**
-         * $route[2] contains any dynamic parameters parsed from the URL.
-         * For instance, if we add a route like:
-         *  $r->addRoute('GET', '/hello/{name}', ['App\Controllers\HelloController', 'greet']);
-         * and the URL is `/hello/dan-the-man`, then `$routeInfo[2][name]` will be `dan-the-man`.
-         */
+    //Controller class dynamic initiciation
+    $controller = new $className();
 
-        // TODO: pass the dynamic route data to the controller method
-        // When done, visiting `http://localhost/hello/dan-the-man` should output "Hi, dan-the-man!"
-        throw new Exception('Not implemented yet');
-
+    //call the method with route parameters
+    $controller->$methodName($parameters);
         break;
 }
