@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 /**
  * This is the central route handler of the application.
@@ -24,6 +25,13 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/', ['App\Controllers\HomeController', 'home']);
     $r->addRoute('GET', '/minifigures', ['App\Controllers\MinifigureController', 'index']);//all minifigures
     $r->addRoute('GET', '/minifigures/{id:\d+}', ['App\Controllers\MinifigureController', 'detail']);//specific, in detail
+    $r->addRoute('GET',  '/cart',               ['App\Controllers\CartController', 'index']);
+    $r->addRoute('POST', '/cart/add/{id:\d+}',  ['App\Controllers\CartController', 'add']);
+    $r->addRoute('POST', '/cart/remove/{id:\d+}', ['App\Controllers\CartController', 'remove']);
+    $r->addRoute('POST', '/cart/update/{id:\d+}', ['App\Controllers\CartController', 'update']);
+    $r->addRoute('GET',  '/checkout', ['App\Controllers\CheckoutController', 'index']);
+    $r->addRoute('POST', '/checkout', ['App\Controllers\CheckoutController', 'placeOrder']);
+    $r->addRoute('GET',  '/order/{id:\d+}', ['App\Controllers\CheckoutController', 'confirmation']);
 });
 // Get the request method and URI from the server variables and invoke the dispatcher
 $httpMethod = $_SERVER['REQUEST_METHOD'];
