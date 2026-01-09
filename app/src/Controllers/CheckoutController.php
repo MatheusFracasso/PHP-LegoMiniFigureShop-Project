@@ -21,6 +21,10 @@ class CheckoutController
     {
         $pageTitle = 'Checkout';
 
+        if (!isset($_SESSION['user'])) {
+    header('Location: /login');
+    exit;
+}
         $cart = $_SESSION['cart'] ?? [];
         if (empty($cart)) {
             header('Location: /cart');
@@ -54,6 +58,11 @@ class CheckoutController
     // POST /checkout
     public function placeOrder(array $parameters = []): void
     {
+        if (!isset($_SESSION['user'])) {
+            header('Location: /login');
+            exit;
+        }
+
         $cart = $_SESSION['cart'] ?? [];
         if (empty($cart)) {
             header('Location: /cart');
