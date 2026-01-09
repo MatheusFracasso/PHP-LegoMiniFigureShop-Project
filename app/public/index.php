@@ -32,6 +32,14 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET',  '/checkout', ['App\Controllers\CheckoutController', 'index']);
     $r->addRoute('POST', '/checkout', ['App\Controllers\CheckoutController', 'placeOrder']);
     $r->addRoute('GET',  '/order/{id:\d+}', ['App\Controllers\CheckoutController', 'confirmation']);
+    $r->addRoute('GET',  '/register', ['App\Controllers\AuthController', 'showRegister']);
+    $r->addRoute('POST', '/register', ['App\Controllers\AuthController', 'register']);
+
+    $r->addRoute('GET',  '/login', ['App\Controllers\AuthController', 'showLogin']);
+    $r->addRoute('POST', '/login', ['App\Controllers\AuthController', 'login']);
+
+    $r->addRoute('POST', '/logout', ['App\Controllers\AuthController', 'logout']);
+
 });
 // Get the request method and URI from the server variables and invoke the dispatcher
 $httpMethod = $_SERVER['REQUEST_METHOD'];

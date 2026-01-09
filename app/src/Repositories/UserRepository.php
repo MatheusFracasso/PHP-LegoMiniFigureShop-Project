@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Config;
+use PDO;
+
+class UserRepository
+{
+    private PDO $connection;
+
+    public function __construct()
+    {
+        $dsn = 'mysql:host=' . Config::DB_SERVER_NAME .
+               ';dbname=' . Config::DB_NAME .
+               ';charset=utf8mb4';
+
+        $this->connection = new PDO($dsn, Config::DB_USERNAME, Config::DB_PASSWORD);
+        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    }
+
+    public function findByEmail(string $email): ?array
+    {
+        $sql = 'SELECT id, email, passwordHash, role FROM users WHERE email = :email LIMIT 1';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute(['email' => $email]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row === false) {
+            return null;
+        }
+
+        return $row;
+    }
+
+    public function createUser(string $email, string $passwordHash, string $role = 'user'): int
+    {
+        $sql = 'INSERT INTO users (email, passwordHash, role) VALUES (:email, :passwordHash, :role)';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([
+            'email' => $email,
+            'passwordHash' => $passwordHash,
+            'role' => $role
+        ]);
+
+        return (int)$this->connection->lastInsertId();
+    }
+
+    public function findById(int $id): ?array
+    {
+        $sql = 'SELECT id, email, role FROM users WHERE id = :id LIMIT 1';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row === false) {
+            return null;
+        }
+
+        return $row;
+    }
+}
