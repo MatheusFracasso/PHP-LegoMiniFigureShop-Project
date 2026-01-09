@@ -15,7 +15,7 @@ function euroFromCents(int $cents): string
     <p><a href="/minifigures">Back to shop</a></p>
 <?php else: ?>
 
-    <table border="1" cellpadding="8" cellspacing="0">
+    <table style="border: 1px solid black; cellpadding: 8; cellspacing: 0">
         <thead>
             <tr>
                 <th>Minifigure</th>
@@ -47,7 +47,9 @@ function euroFromCents(int $cents): string
         <?php endforeach; ?>
         </tbody>
     </table>
-
+<form method="GET" action="/checkout">
+    <button type="submit">Finish order</button>
+</form>
     <h3>Total: <?= euroFromCents($totalCents) ?></h3>
 
     <p><a href="/minifigures">Continue shopping</a></p>

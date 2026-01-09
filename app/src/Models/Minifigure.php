@@ -13,7 +13,16 @@ class Minifigure
     public ?string $origin;
     public ?string $categoryName; 
 
-    public function __construct(int $id, string $name, int $priceCents, string $category, string $imageUrl, string $description, ?int $stock=null, ?string $origin=null, ?string $categoryName=null)
+    public function __construct(
+        int $id, 
+        string $name, 
+        int $priceCents, 
+        string $category, 
+        string $imageUrl, 
+        string $description, 
+        ?int $stock=null, 
+        ?string $origin=null, 
+        ?string $categoryName=null)
     {
         $this->id = $id;
         $this->name = $name;
