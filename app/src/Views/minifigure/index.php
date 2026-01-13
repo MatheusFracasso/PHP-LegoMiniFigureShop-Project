@@ -1,10 +1,22 @@
 
 
 <div class="row g-4">
+<?php
+function getImagePath($name) {
+    // Sanitize name: remove spaces, dashes, and capitalize words
+    $sanitized = str_replace([' ', '-'], '', $name);
+    // Special case for Jaheira
+    if (strpos($name, 'Jaheira') !== false) {
+        $sanitized = 'aheiraInspiredDruid'; // as per filename
+    }
+    return "/images/minifigures/{$sanitized}.png";
+}
+?>
 <?php foreach ($minifigures as $fig): ?>
 <div class="col-12 col-sm-6 col-lg-4">
     <div class="card h-100 shadow">
-        <img src="<?= $fig->imageUrl ?? '/assets/no-image.png' ?>" 
+        <?php $imagePath = getImagePath($fig->name); ?>
+        <img src="<?= $imagePath ?>" 
              alt="<?= htmlspecialchars($fig->name) ?>" 
              class="card-img-top"
              style="object-fit: cover; height: 250px;">
