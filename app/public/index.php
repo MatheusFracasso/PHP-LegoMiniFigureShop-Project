@@ -68,6 +68,9 @@ $r->addRoute('GET', '/admin/orders/{id:\d+}', ['App\Controllers\AdminOrderContro
 $r->addRoute('GET',  '/admin/users', ['App\Controllers\AdminUserController', 'index']);
 $r->addRoute('POST', '/admin/users/role/{id:\d+}', ['App\Controllers\AdminUserController', 'changeRole']);
 
+// API
+$r->addRoute('GET', '/api/minifigures', ['App\Controllers\Api\MinifigureApiController', 'index']);
+
 });
 // Get the request method and URI from the server variables and invoke the dispatcher
 $httpMethod = $_SERVER['REQUEST_METHOD'];
