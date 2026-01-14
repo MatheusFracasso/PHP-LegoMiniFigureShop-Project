@@ -17,18 +17,21 @@ class AdminUserController
     {
         Authorization::requireAdmin();
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $userId = (int)($_POST['userId'] ?? 0);
-            $role = $_POST['role'] ?? 'user';
-            $this->repo->updateRole($userId, $role);
-            header('Location: /admin/users');
-            exit;
-        }
-
         $pageTitle = "Admin - Users";
         $users = $this->repo->getAllUsers();
 
         $contentView = __DIR__ . '/../Views/admin/user/index.php';
         require __DIR__ . '/../Views/layout/main.php';
+    }
+
+    public function changeRole(array $parameters = []): void
+    {
+        Authorization::requireAdmin();
+
+        $id = isset($parameters['id']) ? (int)$parameters['id'] : 0;
+        $role = $_POST['role'] ?? 'user';
+        $this->repo->updateRole($id, $role);
+        header('Location: /admin/users');
+        exit;
     }
 }

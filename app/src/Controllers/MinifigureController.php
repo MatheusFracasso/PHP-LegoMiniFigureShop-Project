@@ -13,11 +13,19 @@ class MinifigureController
         $this->service = new MinifigureService();
     }
 
-    //GET minifigures
+    //GET minifigures (homepage)
+    public function home(array $parameters = []): void
+    {
+        $pageTitle = "Lego Minifigure Store - Home";
+        $contentView = __DIR__ . '/../Views/minifigure/home.php';
+        require __DIR__ . '/../Views/layout/main.php';
+    }
+
+    //GET shop (list all minifigures)
     /** @return MiniFigure[] */
     public function index (array $parameters = []): void
     {
-        $pageTitle = "All Mini Figures";
+        $pageTitle = "Shop - All Mini Figures";
         $minifigures = $this->service->getAllMinifigures();
 
         $contentView = __DIR__ . '/../Views/minifigure/index.php';

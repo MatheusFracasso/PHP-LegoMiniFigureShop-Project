@@ -14,8 +14,7 @@
             <td><?= $user['id'] ?></td>
             <td><?= htmlspecialchars($user['email']) ?></td>
             <td>
-                <form method="POST" style="display:inline;">
-                    <input type="hidden" name="userId" value="<?= $user['id'] ?>">
+                <form method="POST" action="/admin/users/role/<?= $user['id'] ?>" style="display:inline;">
                     <select name="role" onchange="this.form.submit()">
                         <option value="user" <?= $user['role'] === 'user' ? 'selected' : '' ?>>User</option>
                         <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>

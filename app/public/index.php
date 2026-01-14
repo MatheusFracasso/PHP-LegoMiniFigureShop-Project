@@ -22,23 +22,51 @@ use function FastRoute\simpleDispatcher;
  * Define the routes for the application.
  */
 $dispatcher = simpleDispatcher(function (RouteCollector $r) {
-    $r->addRoute('GET', '/', ['App\Controllers\HomeController', 'home']);
-    $r->addRoute('GET', '/minifigures', ['App\Controllers\MinifigureController', 'index']);//all minifigures
-    $r->addRoute('GET', '/minifigures/{id:\d+}', ['App\Controllers\MinifigureController', 'detail']);//specific, in detail
-    $r->addRoute('GET',  '/cart',               ['App\Controllers\CartController', 'index']);
-    $r->addRoute('POST', '/cart/add/{id:\d+}',  ['App\Controllers\CartController', 'add']);
-    $r->addRoute('POST', '/cart/remove/{id:\d+}', ['App\Controllers\CartController', 'remove']);
-    $r->addRoute('POST', '/cart/update/{id:\d+}', ['App\Controllers\CartController', 'update']);
-    $r->addRoute('GET',  '/checkout', ['App\Controllers\CheckoutController', 'index']);
-    $r->addRoute('POST', '/checkout', ['App\Controllers\CheckoutController', 'placeOrder']);
-    $r->addRoute('GET',  '/order/{id:\d+}', ['App\Controllers\CheckoutController', 'confirmation']);
-    $r->addRoute('GET',  '/register', ['App\Controllers\AuthorizationController', 'showRegister']);
-    $r->addRoute('POST', '/register', ['App\Controllers\AuthorizationController', 'register']);
+  // Home
+  $r->addRoute('GET', '/', ['App\Controllers\HomeController', 'home']);
 
-    $r->addRoute('GET',  '/login', ['App\Controllers\AuthorizationController', 'showLogin']);
-    $r->addRoute('POST', '/login', ['App\Controllers\AuthorizationController', 'login']);
+  // Minifigures
+  $r->addRoute('GET', '/minifigures', ['App\Controllers\MinifigureController', 'home']);
+  $r->addRoute('GET', '/minifigures/{id:\d+}', ['App\Controllers\MinifigureController', 'detail']);
+  $r->addRoute('GET', '/shop', ['App\Controllers\MinifigureController', 'index']);
 
-    $r->addRoute('POST', '/logout', ['App\Controllers\AuthorizationController', 'logout']);
+  // Cart
+  $r->addRoute('GET', '/cart', ['App\Controllers\CartController', 'index']);
+  $r->addRoute('POST', '/cart/add/{id:\d+}', ['App\Controllers\CartController', 'add']);
+  $r->addRoute('POST', '/cart/remove/{id:\d+}', ['App\Controllers\CartController', 'remove']);
+  $r->addRoute('POST', '/cart/update/{id:\d+}', ['App\Controllers\CartController', 'update']);
+
+  // Checkout
+  $r->addRoute('GET', '/checkout', ['App\Controllers\CheckoutController', 'index']);
+  $r->addRoute('POST', '/checkout', ['App\Controllers\CheckoutController', 'placeOrder']);
+  $r->addRoute('GET', '/order/{id:\d+}', ['App\Controllers\CheckoutController', 'confirmation']);
+
+  // Authorization
+  $r->addRoute('GET', '/register', ['App\Controllers\AuthorizationController', 'showRegister']);
+  $r->addRoute('POST', '/register', ['App\Controllers\AuthorizationController', 'register']);
+  $r->addRoute('GET', '/login', ['App\Controllers\AuthorizationController', 'showLogin']);
+  $r->addRoute('POST', '/login', ['App\Controllers\AuthorizationController', 'login']);
+  $r->addRoute('POST', '/logout', ['App\Controllers\AuthorizationController', 'logout']);
+
+  // Admin dashboard
+$r->addRoute('GET', '/admin', ['App\Controllers\AdminController', 'dashboard']);
+$r->addRoute('GET', '/admin/dashboard', ['App\Controllers\AdminController', 'dashboard']);
+
+// Admin minifigures CRUD
+$r->addRoute('GET',  '/admin/minifigures', ['App\Controllers\AdminMinifigureController', 'index']);
+$r->addRoute('GET',  '/admin/minifigures/create', ['App\Controllers\AdminMinifigureController', 'create']);
+$r->addRoute('POST', '/admin/minifigures/create', ['App\Controllers\AdminMinifigureController', 'store']);
+$r->addRoute('GET',  '/admin/minifigures/edit/{id:\d+}', ['App\Controllers\AdminMinifigureController', 'edit']);
+$r->addRoute('POST', '/admin/minifigures/edit/{id:\d+}', ['App\Controllers\AdminMinifigureController', 'update']);
+$r->addRoute('POST', '/admin/minifigures/delete/{id:\d+}', ['App\Controllers\AdminMinifigureController', 'delete']);
+
+// Admin orders
+$r->addRoute('GET', '/admin/orders', ['App\Controllers\AdminOrderController', 'index']);
+$r->addRoute('GET', '/admin/orders/{id:\d+}', ['App\Controllers\AdminOrderController', 'detail']);
+
+// Admin users (role switching)
+$r->addRoute('GET',  '/admin/users', ['App\Controllers\AdminUserController', 'index']);
+$r->addRoute('POST', '/admin/users/role/{id:\d+}', ['App\Controllers\AdminUserController', 'changeRole']);
 
 });
 // Get the request method and URI from the server variables and invoke the dispatcher
