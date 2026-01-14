@@ -3,6 +3,7 @@
     <thead>
         <tr>
             <th>ID</th>
+            <th>Name</th>
             <th>Email</th>
             <th>Role</th>
             <th>Actions</th>
@@ -12,6 +13,7 @@
         <?php foreach ($users as $user): ?>
         <tr>
             <td><?= $user['id'] ?></td>
+            <td><?= htmlspecialchars($user['name']) ?></td>
             <td><?= htmlspecialchars($user['email']) ?></td>
             <td>
                 <form method="POST" action="/admin/users/role/<?= $user['id'] ?>" style="display:inline;">

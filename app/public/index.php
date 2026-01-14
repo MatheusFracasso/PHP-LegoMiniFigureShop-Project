@@ -26,7 +26,7 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
   $r->addRoute('GET', '/', ['App\Controllers\HomeController', 'home']);
 
   // Minifigures
-  $r->addRoute('GET', '/minifigures', ['App\Controllers\MinifigureController', 'home']);
+  $r->addRoute('GET', '/minifigures', ['App\Controllers\MinifigureController', 'index']);
   $r->addRoute('GET', '/minifigures/{id:\d+}', ['App\Controllers\MinifigureController', 'detail']);
   $r->addRoute('GET', '/shop', ['App\Controllers\MinifigureController', 'index']);
 

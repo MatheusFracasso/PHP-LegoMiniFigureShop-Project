@@ -1,16 +1,13 @@
-<h1 class="mb-3"><?= htmlspecialchars($message ?? 'Welcome!') ?></h1>
-<p class="lead">Start exploring LEGO minifigures using the Shop link.</p>
-
-<!-- Example grid teaser (from grid section in lecture) -->
-<div class="row g-3 mt-4">
-  <div class="col-12 col-md-6 col-lg-4">
-    <div class="card h-100">
-      <img class="card-img-top" src="/assets/hero-minifig.jpg" alt="Featured minifigure">
-      <div class="card-body">
-        <h5 class="card-title">Featured Minifig</h5>
-        <p class="card-text">Classic Space Explorer.</p>
-        <a href="/minifigures/1" class="btn btn-primary">Details</a>
-      </div>
+<div class="container py-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <h1 class="display-4 fw-bold text-primary">Welcome to Minifigs</h1>
+            <p class="lead">Discover our e-commerce store specializing in LEGO minifigures inspired by Dungeons & Dragons and fantasy boardgame universes. Perfect for gamers and collectors who want personalized characters like mages, warriors, and adventurers.</p>
+            <p>Each minifigure is crafted with attention to detail, ready to bring your tabletop adventures to life.</p>
+            <a href="/minifigures" class="btn btn-primary btn-lg">Explore Minifigures</a>
+        </div>
+        <div class="col-lg-6">
+            <img src="/images/minifigures/GandalfInspiredWizard.png" alt="Featured Minifigure" class="img-fluid rounded shadow">
+        </div>
     </div>
-  </div>
 </div>

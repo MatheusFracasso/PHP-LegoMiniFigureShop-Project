@@ -51,6 +51,9 @@ class CheckoutController
             }
         }
 
+        $customerEmail = $_SESSION['user']['email'];
+        $customerName = $_SESSION['user']['name'];
+
         $contentView = __DIR__ . '/../Views/checkout/index.php';
         require __DIR__ . '/../Views/layout/main.php';
     }

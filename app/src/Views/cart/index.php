@@ -8,50 +8,63 @@ function euroFromCents(int $cents): string
 }
 ?>
 
-<h1>Your Cart</h1>
+<div class="container py-5">
+    <h1 class="mb-4">Your Cart</h1>
 
-<?php if (empty($cartItems)): ?>
-    <p>Your cart is empty.</p>
-    <p><a href="/minifigures">Back to shop</a></p>
-<?php else: ?>
+    <?php if (empty($cartItems)): ?>
+        <div class="alert alert-info">
+            <h4>Your cart is empty.</h4>
+            <p><a href="/minifigures" class="btn btn-primary">Start Shopping</a></p>
+        </div>
+    <?php else: ?>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Minifigure</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Line Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($cartItems as $item): ?>
+                    <?php $fig = $item['minifigure']; ?>
+                    <tr>
+                        <td><?= htmlspecialchars($fig->name) ?></td>
+                        <td><?= htmlspecialchars($fig->priceEuro()) ?></td>
+                        <td>
+                            <form method="POST" action="/cart/update/<?= (int)$fig->id ?>" class="d-inline">
+                                <div class="input-group input-group-sm" style="width: 120px;">
+                                    <input type="number" name="quantity" value="<?= (int)$item['quantity'] ?>" min="0" class="form-control">
+                                    <button type="submit" class="btn btn-outline-secondary">Update</button>
+                                </div>
+                            </form>
+                        </td>
+                        <td><?= euroFromCents((int)$item['lineTotalCents']) ?></td>
+                        <td>
+                            <form method="POST" action="/cart/remove/<?= (int)$fig->id ?>" class="d-inline">
+                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
-    <table style="border: 1px solid black; cellpadding: 8; cellspacing: 0">
-        <thead>
-            <tr>
-                <th>Minifigure</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Line total</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($cartItems as $item): ?>
-            <?php $fig = $item['minifigure']; ?>
-            <tr>
-                <td><?= htmlspecialchars($fig->name) ?></td>
-                <td><?= htmlspecialchars($fig->priceEuro()) ?></td>
-                <td>
-                    <form method="POST" action="/cart/update/<?= (int)$fig->id ?>">
-                        <input type="number" name="quantity" value="<?= (int)$item['quantity'] ?>" min="0">
-                        <button type="submit">Update</button>
-                    </form>
-                </td>
-                <td><?= euroFromCents((int)$item['lineTotalCents']) ?></td>
-                <td>
-                    <form method="POST" action="/cart/remove/<?= (int)$fig->id ?>">
-                        <button type="submit">Remove</button>
-                    </form>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
-<form method="GET" action="/checkout">
-    <button type="submit">Finish order</button>
-</form>
-    <h3>Total: <?= euroFromCents($totalCents) ?></h3>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h3>Total: <?= euroFromCents($totalCents) ?></h3>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="/checkout" class="btn btn-success btn-lg">Go to Checkout</a>
+            </div>
+        </div>
 
-    <p><a href="/minifigures">Continue shopping</a></p>
-
-<?php endif; ?>
+        <div class="mt-3">
+            <a href="/minifigures" class="btn btn-secondary">Continue Shopping</a>
+        </div>
+    <?php endif; ?>
+</div>

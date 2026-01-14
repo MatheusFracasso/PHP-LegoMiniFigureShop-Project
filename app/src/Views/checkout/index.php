@@ -25,10 +25,10 @@ function euroFromCents(int $cents): string {
 
 <form method="POST" action="/checkout">
     <label>Name</label><br>
-    <input type="text" name="customerName" required><br><br>
+    <input type="text" name="customerName" value="<?= htmlspecialchars($customerName ?? '') ?>" required><br><br>
 
     <label>Email</label><br>
-    <input type="email" name="customerEmail" required><br><br>
+    <input type="email" name="customerEmail" value="<?= htmlspecialchars($customerEmail ?? '') ?>" required><br><br>
 
     <button type="submit">Place Order</button>
 </form>

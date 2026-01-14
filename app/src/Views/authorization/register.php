@@ -5,6 +5,9 @@
 <?php endif; ?>
 
 <form method="POST" action="/register">
+    <label>Name</label><br>
+    <input type="text" name="name" required><br><br>
+
     <label>Email</label><br>
     <input type="email" name="email" required><br><br>
 

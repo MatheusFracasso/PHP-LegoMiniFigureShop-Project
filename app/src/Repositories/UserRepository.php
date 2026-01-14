@@ -21,7 +21,7 @@ class UserRepository
 
     public function findByEmail(string $email): ?array
     {
-        $sql = 'SELECT id, email, passwordHash, role FROM users WHERE email = :email LIMIT 1';
+        $sql = 'SELECT id, email, passwordHash, role, name FROM users WHERE email = :email LIMIT 1';
         $stmt = $this->connection->prepare($sql);
         $stmt->execute(['email' => $email]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -33,14 +33,15 @@ class UserRepository
         return $row;
     }
 
-    public function createUser(string $email, string $passwordHash, string $role = 'user'): int
+    public function createUser(string $email, string $passwordHash, string $role = 'user', string $name = ''): int
     {
-        $sql = 'INSERT INTO users (email, passwordHash, role) VALUES (:email, :passwordHash, :role)';
+        $sql = 'INSERT INTO users (email, passwordHash, role, name) VALUES (:email, :passwordHash, :role, :name)';
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([
             'email' => $email,
             'passwordHash' => $passwordHash,
-            'role' => $role
+            'role' => $role,
+            'name' => $name
         ]);
 
         return (int)$this->connection->lastInsertId();
@@ -48,7 +49,7 @@ class UserRepository
 
     public function findById(int $id): ?array
     {
-        $sql = 'SELECT id, email, role FROM users WHERE id = :id LIMIT 1';
+        $sql = 'SELECT id, email, role, name FROM users WHERE id = :id LIMIT 1';
         $stmt = $this->connection->prepare($sql);
         $stmt->execute(['id' => $id]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -62,7 +63,7 @@ class UserRepository
 
     public function getAllUsers(): array
     {
-        $sql = 'SELECT id, email, role FROM users ORDER BY email';
+        $sql = 'SELECT id, email, role, name FROM users ORDER BY email';
         $stmt = $this->connection->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

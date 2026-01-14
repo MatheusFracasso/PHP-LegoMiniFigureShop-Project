@@ -27,8 +27,9 @@ class AuthorizationController
         $email = trim($_POST['email'] ?? '');
         $password = trim($_POST['password'] ?? '');
         $password2 = trim($_POST['password2'] ?? '');
+        $name = trim($_POST['name'] ?? '');
 
-        if ($email === '' || $password === '' || $password2 === '') {
+        if ($email === '' || $password === '' || $password2 === '' || $name === '') {
             $pageTitle = 'Register';
             $error = 'Please fill in all fields.';
             $contentView = __DIR__ . '/../Views/authorization/register.php';
@@ -54,13 +55,14 @@ class AuthorizationController
         }
 
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        $userId = $this->userRepo->createUser($email, $passwordHash, 'user');
+        $userId = $this->userRepo->createUser($email, $passwordHash, 'user', $name);
 
         // Log in right after registration
         $_SESSION['user'] = [
             'id' => $userId,
             'email' => $email,
-            'role' => 'user'
+            'role' => 'user',
+            'name' => $name
         ];
 
         header('Location: /minifigures');
@@ -110,7 +112,8 @@ class AuthorizationController
         $_SESSION['user'] = [
             'id' => (int)$user['id'],
             'email' => (string)$user['email'],
-            'role' => (string)$user['role']
+            'role' => (string)$user['role'],
+            'name' => (string)$user['name']
         ];
 
         header('Location: /minifigures');

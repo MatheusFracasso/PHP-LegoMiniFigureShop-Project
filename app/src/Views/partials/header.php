@@ -10,8 +10,8 @@
       </button>
       <div id="mainNav" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="/minifigures">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="/shop">Shop</a></li>
+          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/minifigures">Shop</a></li>
           <li class="nav-item"><a class="nav-link" href="/cart">Cart</a></li>
         </ul>
         <ul class="navbar-nav">
