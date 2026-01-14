@@ -88,4 +88,11 @@ class OrderRepository
         $order['items'] = $items;
         return $order;
     }
+
+    public function getAllOrders(): array
+    {
+        $stmt = $this->connection->prepare('SELECT id, customerName, customerEmail, totalCents, createdAt FROM orders ORDER BY createdAt DESC');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

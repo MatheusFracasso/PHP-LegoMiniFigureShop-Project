@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Repositories\UserRepository;
 
-class AuthorController
+class AuthorizationController
 {
     private UserRepository $userRepo;
 
@@ -17,7 +17,7 @@ class AuthorController
     public function showRegister(array $parameters = []): void
     {
         $pageTitle = 'Register';
-        $contentView = __DIR__ . '/../Views/author/register.php';
+        $contentView = __DIR__ . '/../Views/authorization/register.php';
         require __DIR__ . '/../Views/layout/main.php';
     }
 
@@ -31,7 +31,7 @@ class AuthorController
         if ($email === '' || $password === '' || $password2 === '') {
             $pageTitle = 'Register';
             $error = 'Please fill in all fields.';
-            $contentView = __DIR__ . '/../Views/author/register.php';
+            $contentView = __DIR__ . '/../Views/authorization/register.php';
             require __DIR__ . '/../Views/layout/main.php';
             return;
         }
@@ -39,7 +39,7 @@ class AuthorController
         if ($password !== $password2) {
             $pageTitle = 'Register';
             $error = 'Passwords do not match.';
-            $contentView = __DIR__ . '/../Views/author/register.php';
+            $contentView = __DIR__ . '/../Views/authorization/register.php';
             require __DIR__ . '/../Views/layout/main.php';
             return;
         }
@@ -48,7 +48,7 @@ class AuthorController
         if ($existing !== null) {
             $pageTitle = 'Register';
             $error = 'Email is already registered.';
-            $contentView = __DIR__ . '/../Views/author/register.php';
+            $contentView = __DIR__ . '/../Views/authorization/register.php';
             require __DIR__ . '/../Views/layout/main.php';
             return;
         }
@@ -71,7 +71,7 @@ class AuthorController
     public function showLogin(array $parameters = []): void
     {
         $pageTitle = 'Login';
-        $contentView = __DIR__ . '/../Views/author/login.php';
+        $contentView = __DIR__ . '/../Views/authorization/login.php';
         require __DIR__ . '/../Views/layout/main.php';
     }
 
@@ -84,7 +84,7 @@ class AuthorController
         if ($email === '' || $password === '') {
             $pageTitle = 'Login';
             $error = 'Please fill in email and password.';
-            $contentView = __DIR__ . '/../Views/author/login.php';
+            $contentView = __DIR__ . '/../Views/authorization/login.php';
             require __DIR__ . '/../Views/layout/main.php';
             return;
         }
@@ -93,7 +93,7 @@ class AuthorController
         if ($user === null) {
             $pageTitle = 'Login';
             $error = 'Invalid email or password.';
-            $contentView = __DIR__ . '/../Views/author/login.php';
+            $contentView = __DIR__ . '/../Views/authorization/login.php';
             require __DIR__ . '/../Views/layout/main.php';
             return;
         }
@@ -102,7 +102,7 @@ class AuthorController
         if ($ok === false) {
             $pageTitle = 'Login';
             $error = 'Invalid email or password.';
-            $contentView = __DIR__ . '/../Views/author/login.php';
+            $contentView = __DIR__ . '/../Views/authorization/login.php';
             require __DIR__ . '/../Views/layout/main.php';
             return;
         }

@@ -102,5 +102,42 @@ class MiniFigureRepository
             (string)($row['description'] ?? '')
         );
     }
+
+    public function create(string $name, int $priceCents, int $categoryId, string $imageUrl, string $description): int
+    {
+        $sql = 'INSERT INTO minifigures (name, priceCents, categoryId, imageUrl, description) VALUES (:name, :priceCents, :categoryId, :imageUrl, :description)';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([
+            'name' => $name,
+            'priceCents' => $priceCents,
+            'categoryId' => $categoryId,
+            'imageUrl' => $imageUrl,
+            'description' => $description
+        ]);
+        return (int)$this->connection->lastInsertId();
+    }
+
+    public function update(int $id, string $name, int $priceCents, int $categoryId, string $imageUrl, string $description): bool
+    {
+        $sql = 'UPDATE minifigures SET name = :name, priceCents = :priceCents, categoryId = :categoryId, imageUrl = :imageUrl, description = :description WHERE id = :id';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([
+            'id' => $id,
+            'name' => $name,
+            'priceCents' => $priceCents,
+            'categoryId' => $categoryId,
+            'imageUrl' => $imageUrl,
+            'description' => $description
+        ]);
+        return $stmt->rowCount() > 0;
+    }
+
+    public function delete(int $id): bool
+    {
+        $sql = 'DELETE FROM minifigures WHERE id = :id';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        return $stmt->rowCount() > 0;
+    }
 }
 

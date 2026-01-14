@@ -32,13 +32,13 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET',  '/checkout', ['App\Controllers\CheckoutController', 'index']);
     $r->addRoute('POST', '/checkout', ['App\Controllers\CheckoutController', 'placeOrder']);
     $r->addRoute('GET',  '/order/{id:\d+}', ['App\Controllers\CheckoutController', 'confirmation']);
-    $r->addRoute('GET',  '/register', ['App\Controllers\AuthorController', 'showRegister']);
-    $r->addRoute('POST', '/register', ['App\Controllers\AuthorController', 'register']);
+    $r->addRoute('GET',  '/register', ['App\Controllers\AuthorizationController', 'showRegister']);
+    $r->addRoute('POST', '/register', ['App\Controllers\AuthorizationController', 'register']);
 
-    $r->addRoute('GET',  '/login', ['App\Controllers\AuthorController', 'showLogin']);
-    $r->addRoute('POST', '/login', ['App\Controllers\AuthorController', 'login']);
+    $r->addRoute('GET',  '/login', ['App\Controllers\AuthorizationController', 'showLogin']);
+    $r->addRoute('POST', '/login', ['App\Controllers\AuthorizationController', 'login']);
 
-    $r->addRoute('POST', '/logout', ['App\Controllers\AuthorController', 'logout']);
+    $r->addRoute('POST', '/logout', ['App\Controllers\AuthorizationController', 'logout']);
 
 });
 // Get the request method and URI from the server variables and invoke the dispatcher

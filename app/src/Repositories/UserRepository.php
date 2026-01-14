@@ -59,4 +59,20 @@ class UserRepository
 
         return $row;
     }
+
+    public function getAllUsers(): array
+    {
+        $sql = 'SELECT id, email, role FROM users ORDER BY email';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function updateRole(int $id, string $role): bool
+    {
+        $sql = 'UPDATE users SET role = :role WHERE id = :id';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute(['id' => $id, 'role' => $role]);
+        return $stmt->rowCount() > 0;
+    }
 }
