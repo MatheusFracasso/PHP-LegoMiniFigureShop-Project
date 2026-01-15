@@ -15,6 +15,19 @@ function euroFromCents(int $cents): string {
 
     <h3>Order Summary</h3>
     <p><strong>Order ID:</strong> #<?= (int)$order['id'] ?></p>
+    <p><strong>Status:</strong> 
+        <?php
+            $statusBadge = '';
+            if ($order['status'] === 'paid') {
+                $statusBadge = '<span style="background-color: #28a745; color: white; padding: 4px 8px; border-radius: 4px;">Paid ✓</span>';
+            } elseif ($order['status'] === 'pending') {
+                $statusBadge = '<span style="background-color: #ffc107; color: black; padding: 4px 8px; border-radius: 4px;">Pending Payment</span>';
+            } elseif ($order['status'] === 'cancelled') {
+                $statusBadge = '<span style="background-color: #dc3545; color: white; padding: 4px 8px; border-radius: 4px;">Cancelled</span>';
+            }
+            echo $statusBadge;
+        ?>
+    </p>
     <p><strong>Total:</strong> <?= euroFromCents((int)$order['totalCents']) ?></p>
 
     <h3>Items</h3>
@@ -37,6 +50,19 @@ function euroFromCents(int $cents): string {
     <p>Order #<?= (int)$order['id'] ?></p>
     <p>Name: <?= htmlspecialchars($order['customerName']) ?></p>
     <p>Email: <?= htmlspecialchars($order['customerEmail']) ?></p>
+    <p><strong>Status:</strong> 
+        <?php
+            $statusBadge = '';
+            if ($order['status'] === 'paid') {
+                $statusBadge = '<span style="background-color: #28a745; color: white; padding: 4px 8px; border-radius: 4px;">Paid ✓</span>';
+            } elseif ($order['status'] === 'pending') {
+                $statusBadge = '<span style="background-color: #ffc107; color: black; padding: 4px 8px; border-radius: 4px;">Pending Payment</span>';
+            } elseif ($order['status'] === 'cancelled') {
+                $statusBadge = '<span style="background-color: #dc3545; color: white; padding: 4px 8px; border-radius: 4px;">Cancelled</span>';
+            }
+            echo $statusBadge;
+        ?>
+    </p>
     <p>Total: <strong><?= euroFromCents((int)$order['totalCents']) ?></strong></p>
 
     <h3>Items</h3>

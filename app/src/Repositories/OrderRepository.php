@@ -92,14 +92,14 @@ class OrderRepository implements IOrderRepository
 
     public function getAllOrders(): array
     {
-        $stmt = $this->connection->prepare('SELECT id, customerName, customerEmail, totalCents, createdAt FROM orders ORDER BY createdAt DESC');
+        $stmt = $this->connection->prepare('SELECT id, customerName, customerEmail, totalCents, status, createdAt FROM orders ORDER BY createdAt DESC');
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getOrdersByUserId(int $userId): array
     {
-        $stmt = $this->connection->prepare('SELECT id, customerName, customerEmail, totalCents, createdAt FROM orders WHERE userId = :userId ORDER BY createdAt DESC');
+        $stmt = $this->connection->prepare('SELECT id, customerName, customerEmail, totalCents, status, createdAt FROM orders WHERE userId = :userId ORDER BY createdAt DESC');
         $stmt->execute(['userId' => $userId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

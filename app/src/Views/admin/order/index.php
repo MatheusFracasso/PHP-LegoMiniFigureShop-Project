@@ -19,8 +19,17 @@
             <td><?= htmlspecialchars($order['customerEmail']) ?></td>
             <td>€<?= number_format($order['totalCents'] / 100, 2) ?></td>
             <td>
-                <span class="badge bg-<?= ($order['status'] ?? 'pending') === 'pending' ? 'warning' : (($order['status'] ?? 'pending') === 'shipped' ? 'info' : (($order['status'] ?? 'pending') === 'delivered' ? 'success' : 'danger')) ?>">
-                    <?= ucfirst($order['status'] ?? 'pending') ?>
+                <?php
+                    $status = $order['status'] ?? 'pending';
+                    $badgeClass = 'warning';
+                    if ($status === 'paid') {
+                        $badgeClass = 'success';
+                    } elseif ($status === 'cancelled') {
+                        $badgeClass = 'danger';
+                    }
+                ?>
+                <span class="badge bg-<?= $badgeClass ?>">
+                    <?= ucfirst($status) ?>
                 </span>
             </td>
             <td><?= $order['createdAt'] ?></td>

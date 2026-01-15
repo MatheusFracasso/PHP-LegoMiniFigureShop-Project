@@ -41,6 +41,10 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
   $r->addRoute('POST', '/checkout', ['App\Controllers\CheckoutController', 'placeOrder']);
   $r->addRoute('GET', '/order/{id:\d+}', ['App\Controllers\CheckoutController', 'confirmation']);
 
+  // Payment
+  $r->addRoute('GET', '/payment/{id:\d+}', ['App\Controllers\PaymentController', 'index']);
+  $r->addRoute('POST', '/payment/{id:\d+}', ['App\Controllers\PaymentController', 'processPayment']);
+
   // Authorization
   $r->addRoute('GET', '/register', ['App\Controllers\AuthorizationController', 'showRegister']);
   $r->addRoute('POST', '/register', ['App\Controllers\AuthorizationController', 'register']);

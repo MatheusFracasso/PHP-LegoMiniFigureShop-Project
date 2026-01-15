@@ -11,8 +11,7 @@
                 <label for="status" class="form-label">Status</label>
                 <select id="status" name="status" class="form-select" required>
                     <option value="pending" <?= ($order['status'] ?? 'pending') === 'pending' ? 'selected' : '' ?>>Pending</option>
-                    <option value="shipped" <?= ($order['status'] ?? 'pending') === 'shipped' ? 'selected' : '' ?>>Shipped</option>
-                    <option value="delivered" <?= ($order['status'] ?? 'pending') === 'delivered' ? 'selected' : '' ?>>Delivered</option>
+                    <option value="paid" <?= ($order['status'] ?? 'pending') === 'paid' ? 'selected' : '' ?>>Paid</option>
                     <option value="cancelled" <?= ($order['status'] ?? 'pending') === 'cancelled' ? 'selected' : '' ?>>Cancelled</option>
                 </select>
             </div>

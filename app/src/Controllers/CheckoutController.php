@@ -81,7 +81,8 @@ class CheckoutController
             $_SESSION['guestOrderEmail'] = $customerEmail;
         }
 
-        header('Location: /order/' . $orderId);
+        // Redirect to payment page
+        header('Location: /payment/' . $orderId);
         exit;
     }
 
