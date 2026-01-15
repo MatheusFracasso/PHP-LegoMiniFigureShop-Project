@@ -17,7 +17,7 @@ class OrderService implements IOrderService
         $this->orderRepository = new OrderRepository();
     }
 
-    public function createOrderFromCart(int $userId, string $customerName, string $customerEmail): int|array
+    public function createOrderFromCart(?int $userId, string $customerName, string $customerEmail): int|array
     {
         $customerName = trim($customerName);
         $customerEmail = trim($customerEmail);

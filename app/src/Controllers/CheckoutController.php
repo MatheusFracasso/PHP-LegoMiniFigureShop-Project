@@ -24,12 +24,6 @@ class CheckoutController
     {
         $pageTitle = 'Checkout';
 
-        if (!isset($_SESSION['user'])) {
-            $_SESSION['returnUrl'] = '/checkout';
-            header('Location: /login');
-            exit;
-        }
-
         $cart = $_SESSION['cart'] ?? [];
         if (empty($cart)) {
             header('Location: /cart');
@@ -40,8 +34,9 @@ class CheckoutController
         $cartItems = $cartData['items'];
         $totalCents = $cartData['totalCents'];
 
-        $customerEmail = $_SESSION['user']['email'];
-        $customerName = $_SESSION['user']['name'];
+        $isLoggedIn = isset($_SESSION['user']);
+        $customerEmail = $isLoggedIn ? $_SESSION['user']['email'] : '';
+        $customerName = $isLoggedIn ? $_SESSION['user']['name'] : '';
 
         $contentView = __DIR__ . '/../Views/checkout/index.php';
         require __DIR__ . '/../Views/layout/main.php';
@@ -50,11 +45,6 @@ class CheckoutController
     // POST /checkout
     public function placeOrder(array $parameters = []): void
     {
-        if (!isset($_SESSION['user'])) {
-            header('Location: /login');
-            exit;
-        }
-
         $cart = $_SESSION['cart'] ?? [];
         if (empty($cart)) {
             header('Location: /cart');
@@ -63,7 +53,7 @@ class CheckoutController
 
         $customerName = $_POST['customerName'] ?? '';
         $customerEmail = $_POST['customerEmail'] ?? '';
-        $userId = $_SESSION['user']['id'];
+        $userId = isset($_SESSION['user']) ? $_SESSION['user']['id'] : null;
 
         // Delegate all order creation logic to service
         $result = $this->orderService->createOrderFromCart($userId, $customerName, $customerEmail);
@@ -76,6 +66,7 @@ class CheckoutController
             $cartData = $this->cartService->getCartWithTotals($cart);
             $cartItems = $cartData['items'];
             $totalCents = $cartData['totalCents'];
+            $isLoggedIn = isset($_SESSION['user']);
             $contentView = __DIR__ . '/../Views/checkout/index.php';
             require __DIR__ . '/../Views/layout/main.php';
             return;
@@ -83,6 +74,13 @@ class CheckoutController
 
         // Success case - result is the orderId (int)
         $orderId = $result;
+
+        // If guest checkout, store order info in session for one-time display
+        if (!isset($_SESSION['user'])) {
+            $_SESSION['guestOrderId'] = $orderId;
+            $_SESSION['guestOrderEmail'] = $customerEmail;
+        }
+
         header('Location: /order/' . $orderId);
         exit;
     }
@@ -96,7 +94,32 @@ class CheckoutController
         if ($order === null) {
             http_response_code(404);
             echo 'Order not found';
+        // Check if user is logged in or if this is a guest order they just placed
+        $isLoggedIn = isset($_SESSION['user']);
+        $isGuestOrder = (int)$order['userId'] === 0 || $order['userId'] === null;
+        $isOwnOrder = $isLoggedIn && (int)$order['userId'] === $_SESSION['user']['id'];
+        $isJustPlacedGuest = !$isLoggedIn && isset($_SESSION['guestOrderId']) && $_SESSION['guestOrderId'] === $id;
+
+        if ($isGuestOrder && !$isJustPlacedGuest) {
+            http_response_code(403);
+            echo 'Order details not available';
             return;
+        }
+
+        if (!$isOwnOrder && !$isJustPlacedGuest) {
+            http_response_code(403);
+            echo 'Order details not available';
+            return;
+        }
+
+        // Clear guest order info after displaying once
+        if ($isJustPlacedGuest) {
+            unset($_SESSION['guestOrderId']);
+            unset($_SESSION['guestOrderEmail']);
+        }
+
+        $pageTitle = 'Order Confirmation';
+        $isGuest = !$isLoggedIn
         }
 
         $pageTitle = 'Order Confirmation';
