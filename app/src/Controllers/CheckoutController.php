@@ -2,16 +2,19 @@
 
 namespace App\Controllers;
 
+use App\Services\CartService;
 use App\Services\MinifigureService;
 use App\Repositories\OrderRepository;
 
 class CheckoutController
 {
+    private CartService $cartService;
     private MinifigureService $minifigureService;
     private OrderRepository $orderRepo;
 
     public function __construct()
     {
+        $this->cartService = new CartService();
         $this->minifigureService = new MinifigureService();
         $this->orderRepo = new OrderRepository();
     }
@@ -22,34 +25,19 @@ class CheckoutController
         $pageTitle = 'Checkout';
 
         if (!isset($_SESSION['user'])) {
-    header('Location: /login');
-    exit;
-}
+            header('Location: /login');
+            exit;
+        }
+
         $cart = $_SESSION['cart'] ?? [];
         if (empty($cart)) {
             header('Location: /cart');
             exit;
         }
 
-        $cartItems = [];
-        $totalCents = 0;
-
-        foreach ($cart as $id => $qty) {
-            $id = (int)$id;
-            $qty = (int)$qty;
-
-            $fig = $this->minifigureService->getById($id);
-            if ($fig !== null) {
-                $lineTotal = $fig->priceCents * $qty;
-                $totalCents += $lineTotal;
-
-                $cartItems[] = [
-                    'minifigure' => $fig,
-                    'quantity' => $qty,
-                    'lineTotalCents' => $lineTotal
-                ];
-            }
-        }
+        $cartData = $this->cartService->getCartWithTotals($cart);
+        $cartItems = $cartData['items'];
+        $totalCents = $cartData['totalCents'];
 
         $customerEmail = $_SESSION['user']['email'];
         $customerName = $_SESSION['user']['name'];
@@ -78,6 +66,9 @@ class CheckoutController
         if ($customerName === '' || $customerEmail === '') {
             $pageTitle = 'Checkout';
             $error = 'Please fill in name and email.';
+            $cartData = $this->cartService->getCartWithTotals($cart);
+            $cartItems = $cartData['items'];
+            $totalCents = $cartData['totalCents'];
             $contentView = __DIR__ . '/../Views/checkout/index.php';
             require __DIR__ . '/../Views/layout/main.php';
             return;
@@ -110,7 +101,7 @@ class CheckoutController
         $orderId = $this->orderRepo->createOrder($customerName, $customerEmail, $totalCents, $items, $userId);
 
         // Clear cart
-        $_SESSION['cart'] = [];
+        $this->cartService->clearCart();
 
         header('Location: /order/' . $orderId);
         exit;

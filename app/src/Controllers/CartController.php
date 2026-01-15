@@ -2,15 +2,15 @@
 
 namespace App\Controllers;
 
-use App\Services\MinifigureService;
+use App\Services\CartService;
 
 class CartController
 {
-    private MinifigureService $minifigureService;
+    private CartService $cartService;
 
     public function __construct()
     {
-        $this->minifigureService = new MinifigureService();
+        $this->cartService = new CartService();
     }
 
     // GET /cart
@@ -19,27 +19,9 @@ class CartController
         $pageTitle = 'Your Cart';
 
         $cart = $_SESSION['cart'] ?? [];
-        $cartItems = [];
-        $totalCents = 0;
-
-        // Build a list of items with product info + quantity
-        foreach ($cart as $id => $qty) {
-            $id = (int)$id;
-            $qty = (int)$qty;
-
-            $minifigure = $this->minifigureService->getById($id);
-
-            if ($minifigure !== null) {
-                $lineTotal = $minifigure->priceCents * $qty;
-                $totalCents += $lineTotal;
-
-                $cartItems[] = [
-                    'minifigure' => $minifigure,
-                    'quantity' => $qty,
-                    'lineTotalCents' => $lineTotal
-                ];
-            }
-        }
+        $cartData = $this->cartService->getCartWithTotals($cart);
+        $cartItems = $cartData['items'];
+        $totalCents = $cartData['totalCents'];
 
         $contentView = __DIR__ . '/../Views/cart/index.php';
         require __DIR__ . '/../Views/layout/main.php';
@@ -50,15 +32,7 @@ class CartController
     {
         $id = isset($parameters['id']) ? (int)$parameters['id'] : 0;
 
-        if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = [];
-        }
-
-        if (!isset($_SESSION['cart'][$id])) {
-            $_SESSION['cart'][$id] = 0;
-        }
-
-        $_SESSION['cart'][$id] = $_SESSION['cart'][$id] + 1;
+        $this->cartService->addToCart($id);
 
         header('Location: /cart');
         exit;
@@ -69,9 +43,7 @@ class CartController
     {
         $id = isset($parameters['id']) ? (int)$parameters['id'] : 0;
 
-        if (isset($_SESSION['cart'][$id])) {
-            unset($_SESSION['cart'][$id]);
-        }
+        $this->cartService->removeFromCart($id);
 
         header('Location: /cart');
         exit;
@@ -87,14 +59,7 @@ class CartController
             $qty = (int)$_POST['quantity'];
         }
 
-        if ($qty <= 0) {
-            // 0 or negative = remove
-            if (isset($_SESSION['cart'][$id])) {
-                unset($_SESSION['cart'][$id]);
-            }
-        } else {
-            $_SESSION['cart'][$id] = $qty;
-        }
+        $this->cartService->updateQuantity($id, $qty);
 
         header('Location: /cart');
         exit;
