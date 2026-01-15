@@ -21,7 +21,9 @@
                 <?= htmlspecialchars($_SESSION['user']['email']) ?>
               </a>
               <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="/my-orders">My Orders</a></li>
                 <?php if ($_SESSION['user']['role'] === 'admin'): ?>
+                  <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="/admin">Admin Panel</a></li>
                 <?php endif; ?>
                 <li><form method="POST" action="/logout" style="display:inline;"><button type="submit" class="dropdown-item">Logout</button></form></li>

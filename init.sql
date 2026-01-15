@@ -24,10 +24,12 @@ CREATE TABLE users (
 
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT,
     customerName VARCHAR(255) NOT NULL,
     customerEmail VARCHAR(255) NOT NULL,
     totalCents INT NOT NULL,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES users(id)
 );
 
 CREATE TABLE orderItems (

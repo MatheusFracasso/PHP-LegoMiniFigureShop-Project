@@ -48,6 +48,9 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
   $r->addRoute('POST', '/login', ['App\Controllers\AuthorizationController', 'login']);
   $r->addRoute('POST', '/logout', ['App\Controllers\AuthorizationController', 'logout']);
 
+  // User Account
+  $r->addRoute('GET', '/my-orders', ['App\Controllers\UserOrderController', 'myOrders']);
+
   // Admin dashboard
 $r->addRoute('GET', '/admin', ['App\Controllers\AdminController', 'dashboard']);
 $r->addRoute('GET', '/admin/dashboard', ['App\Controllers\AdminController', 'dashboard']);

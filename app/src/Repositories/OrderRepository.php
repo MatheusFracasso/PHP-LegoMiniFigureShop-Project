@@ -23,17 +23,18 @@ class OrderRepository
     /**
      * @param array<int, array<string,int>> $items
      */
-    public function createOrder(string $customerName, string $customerEmail, int $totalCents, array $items): int
+    public function createOrder(string $customerName, string $customerEmail, int $totalCents, array $items, ?int $userId = null): int
     {
         try {
             $this->connection->beginTransaction();
 
             // Insert into orders
             $stmt = $this->connection->prepare('
-                INSERT INTO orders (customerName, customerEmail, totalCents)
-                VALUES (:customerName, :customerEmail, :totalCents)
+                INSERT INTO orders (userId, customerName, customerEmail, totalCents)
+                VALUES (:userId, :customerName, :customerEmail, :totalCents)
             ');
             $stmt->execute([
+                'userId' => $userId,
                 'customerName' => $customerName,
                 'customerEmail' => $customerEmail,
                 'totalCents' => $totalCents
@@ -93,6 +94,13 @@ class OrderRepository
     {
         $stmt = $this->connection->prepare('SELECT id, customerName, customerEmail, totalCents, createdAt FROM orders ORDER BY createdAt DESC');
         $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getOrdersByUserId(int $userId): array
+    {
+        $stmt = $this->connection->prepare('SELECT id, customerName, customerEmail, totalCents, createdAt FROM orders WHERE userId = :userId ORDER BY createdAt DESC');
+        $stmt->execute(['userId' => $userId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

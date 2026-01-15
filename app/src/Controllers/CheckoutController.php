@@ -105,8 +105,9 @@ class CheckoutController
             }
         }
 
-        // Save order + order items
-        $orderId = $this->orderRepo->createOrder($customerName, $customerEmail, $totalCents, $items);
+        // Save order + order items (with userId if user is logged in)
+        $userId = $_SESSION['user']['id'] ?? null;
+        $orderId = $this->orderRepo->createOrder($customerName, $customerEmail, $totalCents, $items, $userId);
 
         // Clear cart
         $_SESSION['cart'] = [];
