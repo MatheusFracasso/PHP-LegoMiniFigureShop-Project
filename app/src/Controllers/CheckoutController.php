@@ -3,19 +3,19 @@
 namespace App\Controllers;
 
 use App\Services\CartService;
-use App\Services\MinifigureService;
+use App\Services\OrderService;
 use App\Repositories\OrderRepository;
 
 class CheckoutController
 {
     private CartService $cartService;
-    private MinifigureService $minifigureService;
+    private OrderService $orderService;
     private OrderRepository $orderRepo;
 
     public function __construct()
     {
         $this->cartService = new CartService();
-        $this->minifigureService = new MinifigureService();
+        $this->orderService = new OrderService();
         $this->orderRepo = new OrderRepository();
     }
 
@@ -60,12 +60,18 @@ class CheckoutController
             exit;
         }
 
-        $customerName = trim($_POST['customerName'] ?? '');
-        $customerEmail = trim($_POST['customerEmail'] ?? '');
+        $customerName = $_POST['customerName'] ?? '';
+        $customerEmail = $_POST['customerEmail'] ?? '';
+        $userId = $_SESSION['user']['id'];
 
-        if ($customerName === '' || $customerEmail === '') {
+        // Delegate all order creation logic to service
+        $result = $this->orderService->createOrderFromCart($userId, $customerName, $customerEmail);
+
+        // Check if order creation was successful
+        if (is_array($result)) {
+            // Error case - result is ['error' => 'message']
             $pageTitle = 'Checkout';
-            $error = 'Please fill in name and email.';
+            $error = $result['error'];
             $cartData = $this->cartService->getCartWithTotals($cart);
             $cartItems = $cartData['items'];
             $totalCents = $cartData['totalCents'];
@@ -74,35 +80,8 @@ class CheckoutController
             return;
         }
 
-        // rebuild cart items & totals (never trust only POST)
-        $items = [];
-        $totalCents = 0;
-
-        foreach ($cart as $id => $qty) {
-            $id = (int)$id;
-            $qty = (int)$qty;
-
-            $fig = $this->minifigureService->getById($id);
-            if ($fig !== null) {
-                $lineTotal = $fig->priceCents * $qty;
-                $totalCents += $lineTotal;
-
-                $items[] = [
-                    'minifigureId' => $fig->id,
-                    'quantity' => $qty,
-                    'priceCents' => $fig->priceCents,
-                    'lineTotalCents' => $lineTotal
-                ];
-            }
-        }
-
-        // Save order + order items (with userId if user is logged in)
-        $userId = $_SESSION['user']['id'] ?? null;
-        $orderId = $this->orderRepo->createOrder($customerName, $customerEmail, $totalCents, $items, $userId);
-
-        // Clear cart
-        $this->cartService->clearCart();
-
+        // Success case - result is the orderId (int)
+        $orderId = $result;
         header('Location: /order/' . $orderId);
         exit;
     }
