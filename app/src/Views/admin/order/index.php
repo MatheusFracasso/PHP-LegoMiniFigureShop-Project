@@ -6,6 +6,7 @@
             <th>Customer Name</th>
             <th>Email</th>
             <th>Total</th>
+            <th>Status</th>
             <th>Date</th>
             <th>Actions</th>
         </tr>
@@ -17,6 +18,11 @@
             <td><?= htmlspecialchars($order['customerName']) ?></td>
             <td><?= htmlspecialchars($order['customerEmail']) ?></td>
             <td>€<?= number_format($order['totalCents'] / 100, 2) ?></td>
+            <td>
+                <span class="badge bg-<?= ($order['status'] ?? 'pending') === 'pending' ? 'warning' : (($order['status'] ?? 'pending') === 'shipped' ? 'info' : (($order['status'] ?? 'pending') === 'delivered' ? 'success' : 'danger')) ?>">
+                    <?= ucfirst($order['status'] ?? 'pending') ?>
+                </span>
+            </td>
             <td><?= $order['createdAt'] ?></td>
             <td>
                 <a href="/admin/orders/<?= $order['id'] ?>" class="btn btn-sm btn-primary">View Details</a>

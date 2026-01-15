@@ -103,4 +103,32 @@ class OrderRepository
         $stmt->execute(['userId' => $userId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function updateOrderStatus(int $id, string $status): bool
+    {
+        $stmt = $this->connection->prepare('UPDATE orders SET status = :status WHERE id = :id');
+        $stmt->execute(['status' => $status, 'id' => $id]);
+        return $stmt->rowCount() > 0;
+    }
+
+    public function deleteOrder(int $id): bool
+    {
+        try {
+            $this->connection->beginTransaction();
+
+            // Delete order items first
+            $deleteItemsStmt = $this->connection->prepare('DELETE FROM orderItems WHERE orderId = :id');
+            $deleteItemsStmt->execute(['id' => $id]);
+
+            // Delete order
+            $deleteOrderStmt = $this->connection->prepare('DELETE FROM orders WHERE id = :id');
+            $deleteOrderStmt->execute(['id' => $id]);
+
+            $this->connection->commit();
+            return true;
+        } catch (PDOException $e) {
+            $this->connection->rollBack();
+            return false;
+        }
+    }
 }

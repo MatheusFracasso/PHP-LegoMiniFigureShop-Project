@@ -28,6 +28,7 @@ CREATE TABLE orders (
     customerName VARCHAR(255) NOT NULL,
     customerEmail VARCHAR(255) NOT NULL,
     totalCents INT NOT NULL,
+    status ENUM('pending', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (userId) REFERENCES users(id)
 );

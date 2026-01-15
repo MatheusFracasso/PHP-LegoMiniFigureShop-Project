@@ -42,4 +42,27 @@ class AdminOrderController
         $contentView = __DIR__ . '/../Views/admin/order/detail.php';
         require __DIR__ . '/../Views/layout/main.php';
     }
+
+    public function updateStatus(array $parameters = []): void
+    {
+        Authorization::requireAdmin();
+
+        $id = isset($parameters['id']) ? (int)$parameters['id'] : 0;
+        $status = $_POST['status'] ?? 'pending';
+
+        $this->repo->updateOrderStatus($id, $status);
+        header('Location: /admin/orders/' . $id);
+        exit;
+    }
+
+    public function delete(array $parameters = []): void
+    {
+        Authorization::requireAdmin();
+
+        $id = isset($parameters['id']) ? (int)$parameters['id'] : 0;
+
+        $this->repo->deleteOrder($id);
+        header('Location: /admin/orders');
+        exit;
+    }
 }

@@ -66,6 +66,8 @@ $r->addRoute('POST', '/admin/minifigures/delete/{id:\d+}', ['App\Controllers\Adm
 // Admin orders
 $r->addRoute('GET', '/admin/orders', ['App\Controllers\AdminOrderController', 'index']);
 $r->addRoute('GET', '/admin/orders/{id:\d+}', ['App\Controllers\AdminOrderController', 'detail']);
+$r->addRoute('POST', '/admin/orders/{id:\d+}/status', ['App\Controllers\AdminOrderController', 'updateStatus']);
+$r->addRoute('POST', '/admin/orders/{id:\d+}/delete', ['App\Controllers\AdminOrderController', 'delete']);
 
 // Admin users (role switching)
 $r->addRoute('GET',  '/admin/users', ['App\Controllers\AdminUserController', 'index']);
