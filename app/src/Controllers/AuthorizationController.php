@@ -2,15 +2,15 @@
 
 namespace App\Controllers;
 
-use App\Repositories\UserRepository;
+use App\Services\AuthService;
 
 class AuthorizationController
 {
-    private UserRepository $userRepo;
+    private AuthService $authService;
 
     public function __construct()
     {
-        $this->userRepo = new UserRepository();
+        $this->authService = new AuthService();
     }
 
     // GET /register
@@ -24,45 +24,33 @@ class AuthorizationController
     // POST /register
     public function register(array $parameters = []): void
     {
-        $email = trim($_POST['email'] ?? '');
-        $password = trim($_POST['password'] ?? '');
-        $password2 = trim($_POST['password2'] ?? '');
-        $name = trim($_POST['name'] ?? '');
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
+        $password2 = $_POST['password2'] ?? '';
+        $name = $_POST['name'] ?? '';
 
-        if ($email === '' || $password === '' || $password2 === '' || $name === '') {
+        // Attempt registration via service
+        $result = $this->authService->registerUser($email, $password, $name);
+
+        // Check if registration was successful
+        if (is_array($result)) {
+            // Error case - result is ['error' => 'message']
             $pageTitle = 'Register';
-            $error = 'Please fill in all fields.';
+            $error = $result['error'];
             $contentView = __DIR__ . '/../Views/authorization/register.php';
             require __DIR__ . '/../Views/layout/main.php';
             return;
         }
 
-        if ($password !== $password2) {
-            $pageTitle = 'Register';
-            $error = 'Passwords do not match.';
-            $contentView = __DIR__ . '/../Views/authorization/register.php';
-            require __DIR__ . '/../Views/layout/main.php';
-            return;
-        }
-
-        $existing = $this->userRepo->findByEmail($email);
-        if ($existing !== null) {
-            $pageTitle = 'Register';
-            $error = 'Email is already registered.';
-            $contentView = __DIR__ . '/../Views/authorization/register.php';
-            require __DIR__ . '/../Views/layout/main.php';
-            return;
-        }
-
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        $userId = $this->userRepo->createUser($email, $passwordHash, 'user', $name);
+        // Success case - result is the userId (int)
+        $userId = $result;
 
         // Log in right after registration
         $_SESSION['user'] = [
             'id' => $userId,
-            'email' => $email,
+            'email' => trim($email),
             'role' => 'user',
-            'name' => $name
+            'name' => trim($name)
         ];
 
         header('Location: /minifigures');
@@ -80,19 +68,14 @@ class AuthorizationController
     // POST /login
     public function login(array $parameters = []): void
     {
-        $email = trim($_POST['email'] ?? '');
-        $password = trim($_POST['password'] ?? '');
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
 
-        if ($email === '' || $password === '') {
-            $pageTitle = 'Login';
-            $error = 'Please fill in email and password.';
-            $contentView = __DIR__ . '/../Views/authorization/login.php';
-            require __DIR__ . '/../Views/layout/main.php';
-            return;
-        }
+        // Attempt authentication via service
+        $user = $this->authService->authenticate($email, $password);
 
-        $user = $this->userRepo->findByEmail($email);
         if ($user === null) {
+            // Authentication failed
             $pageTitle = 'Login';
             $error = 'Invalid email or password.';
             $contentView = __DIR__ . '/../Views/authorization/login.php';
@@ -100,21 +83,8 @@ class AuthorizationController
             return;
         }
 
-        $ok = password_verify($password, $user['passwordHash']);
-        if ($ok === false) {
-            $pageTitle = 'Login';
-            $error = 'Invalid email or password.';
-            $contentView = __DIR__ . '/../Views/authorization/login.php';
-            require __DIR__ . '/../Views/layout/main.php';
-            return;
-        }
-
-        $_SESSION['user'] = [
-            'id' => (int)$user['id'],
-            'email' => (string)$user['email'],
-            'role' => (string)$user['role'],
-            'name' => (string)$user['name']
-        ];
+        // Set session with authenticated user data
+        $_SESSION['user'] = $user;
 
         header('Location: /minifigures');
         exit;

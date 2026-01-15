@@ -13,22 +13,16 @@ class CartService implements ICartService
         $this->minifigureRepo = new MiniFigureRepository();
     }
 
-    /**
-     * Get cart items enriched with product data and calculated totals.
-     */
     public function getCartWithTotals(array $sessionCart): array
     {
         $cartItems = [];
         $totalCents = 0;
 
-        // Build a list of items with product info + quantity
         foreach ($sessionCart as $id => $qty) {
-            $id = (int)$id;
-            $qty = (int)$qty;
-
-            $minifigure = $this->minifigureRepo->getById($id);
+            $minifigure = $this->minifigureRepo->getById((int)$id);
 
             if ($minifigure !== null) {
+                $qty = (int)$qty;
                 $lineTotal = $minifigure->priceCents * $qty;
                 $totalCents += $lineTotal;
 
@@ -46,9 +40,6 @@ class CartService implements ICartService
         ];
     }
 
-    /**
-     * Add a product to the cart (or increment quantity if already present).
-     */
     public function addToCart(int $productId): void
     {
         if (!isset($_SESSION['cart'])) {
@@ -59,12 +50,9 @@ class CartService implements ICartService
             $_SESSION['cart'][$productId] = 0;
         }
 
-        $_SESSION['cart'][$productId] = $_SESSION['cart'][$productId] + 1;
+        $_SESSION['cart'][$productId]++;
     }
 
-    /**
-     * Remove a product from the cart.
-     */
     public function removeFromCart(int $productId): void
     {
         if (isset($_SESSION['cart'][$productId])) {
@@ -72,14 +60,9 @@ class CartService implements ICartService
         }
     }
 
-    /**
-     * Update the quantity of a product in the cart.
-     * If quantity is 0 or negative, the item is removed.
-     */
     public function updateQuantity(int $productId, int $quantity): void
     {
         if ($quantity <= 0) {
-            // 0 or negative = remove
             if (isset($_SESSION['cart'][$productId])) {
                 unset($_SESSION['cart'][$productId]);
             }
@@ -88,9 +71,6 @@ class CartService implements ICartService
         }
     }
 
-    /**
-     * Clear the entire cart.
-     */
     public function clearCart(): void
     {
         $_SESSION['cart'] = [];
