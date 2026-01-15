@@ -2,7 +2,8 @@
 namespace App\Services;
 use App\Models\MiniFigure;
 use App\Repositories\MiniFigureRepository;
-class MinifigureService
+
+class MinifigureService implements IMinifigureService
 {
     private MiniFigureRepository $repository;
 

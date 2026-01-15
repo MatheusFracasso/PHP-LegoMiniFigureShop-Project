@@ -6,7 +6,7 @@ use App\Config;
 use PDO;
 use PDOException;
 
-class OrderRepository
+class OrderRepository implements IOrderRepository
 {
     private PDO $connection;
 

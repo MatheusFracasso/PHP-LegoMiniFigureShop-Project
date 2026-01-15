@@ -21,7 +21,7 @@ function getImagePath($name) {
     $sanitized = str_replace([' ', '-'], '', $name);
     // Special case for Jaheira
     if (strpos($name, 'Jaheira') !== false) {
-        $sanitized = 'aheiraInspiredDruid'; // as per filename
+        $sanitized = 'JaheiraInspiredDruid'; // matches filename
     }
     return "/images/minifigures/{$sanitized}.png";
 }

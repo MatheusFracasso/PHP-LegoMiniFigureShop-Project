@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Config;
 use PDO;
 
-class UserRepository
+class UserRepository implements IUserRepository
 {
     private PDO $connection;
 

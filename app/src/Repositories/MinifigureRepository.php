@@ -5,7 +5,7 @@ use App\Models\MiniFigure;
 use PDO;
 use PDOException;
 
-class MiniFigureRepository
+class MiniFigureRepository implements IMiniFigureRepository
 {
     private PDO $connection;
     public function __construct()
