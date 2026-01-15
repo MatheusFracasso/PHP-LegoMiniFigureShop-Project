@@ -94,6 +94,9 @@ class CheckoutController
         if ($order === null) {
             http_response_code(404);
             echo 'Order not found';
+            return;
+        }
+
         // Check if user is logged in or if this is a guest order they just placed
         $isLoggedIn = isset($_SESSION['user']);
         $isGuestOrder = (int)$order['userId'] === 0 || $order['userId'] === null;
@@ -119,10 +122,7 @@ class CheckoutController
         }
 
         $pageTitle = 'Order Confirmation';
-        $isGuest = !$isLoggedIn
-        }
-
-        $pageTitle = 'Order Confirmation';
+        $isGuest = !$isLoggedIn;
         $contentView = __DIR__ . '/../Views/checkout/confirmation.php';
         require __DIR__ . '/../Views/layout/main.php';
     }

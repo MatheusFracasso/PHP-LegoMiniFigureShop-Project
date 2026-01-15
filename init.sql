@@ -19,18 +19,19 @@ CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
     passwordHash VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
     role ENUM('user', 'admin') DEFAULT 'user'
 );
 
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    userId INT,
+    userId INT NULL,
     customerName VARCHAR(255) NOT NULL,
     customerEmail VARCHAR(255) NOT NULL,
     totalCents INT NOT NULL,
-    status ENUM('pending', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
+    status ENUM('pending', 'paid', 'cancelled') DEFAULT 'pending',
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (userId) REFERENCES users(id)
+    FOREIGN KEY (userId) REFERENCES users(id) ON DELETE SET NULL
 );
 
 CREATE TABLE orderItems (
@@ -45,9 +46,16 @@ CREATE TABLE orderItems (
 );
 
 -- Insert some sample data
-INSERT INTO categories (name) VALUES ('Fantasy'), ('Sci-Fi'), ('Historical');
+INSERT INTO categories (name) VALUES ('Heroes'), ('Spellcasters'), ('Legends');
 
 INSERT INTO minifigures (name, priceCents, categoryId, imageUrl, description) VALUES
-('Gandalf', 500, 1, '/images/minifigures/GandalfInspiredWizard.png', 'A wise wizard from Middle-earth.'),
-('Yoda', 600, 2, '/images/minifigures/YodaInspiredJedi.png', 'A legendary Jedi Master.'),
-('Knight', 450, 3, '/images/minifigures/Knight.png', 'A brave medieval knight.');
+('TheLadyOfPain',      620, 3, '/images/minifigures/TheLadyOfPain.png',      'Mysterious ruler who floats silently, face masked with blades.'),
+('aheirInspiredDruid', 500, 2, '/images/minifigures/aheirInspiredDruid.png', 'Nature sage who commands vines and storms.'),
+('HalflingDruid',      470, 2, '/images/minifigures/HalflingDruid.png',      'Cheerful guardian who shapeshifts into woodland beasts.'),
+('TashaTheWitchQueen', 610, 3, '/images/minifigures/TashaTheWitchQueen.png', 'Legendary witch queen wielding playful yet deadly curses.'),
+('TieflingSorcerer',   560, 2, '/images/minifigures/TieflingSorcerer.png',   'Infernal-blooded caster channeling raw arcane power.'),
+('ElfBard',            490, 1, '/images/minifigures/ElfBard.png',            'Silver-tongued minstrel whose songs inspire allies.'),
+('DragonbornPaladin',  580, 1, '/images/minifigures/DragonbornPaladin.png',  'Oath-bound champion with radiant breath and shield.'),
+('WolfpackBeastmaster',520, 1, '/images/minifigures/WolfpackBeastmaster.png','Tracker leading loyal wolves into battle.'),
+('AgathaHarkness',     600, 3, '/images/minifigures/AgathaHarkness.png',     'Ancient witch mastering forbidden hexes.'),
+('SzassTam',           620, 3, '/images/minifigures/SzassTam.png',           'Undying lich lord commanding legions of the dead.');

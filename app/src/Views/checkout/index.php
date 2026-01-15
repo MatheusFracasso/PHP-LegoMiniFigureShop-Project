@@ -30,19 +30,14 @@ function euroFromCents(int $cents): string {
 <?php endif; ?>
 
 <form method="POST" action="/checkout">
-    <label>Name</label><br>
     <?php if ($isLoggedIn ?? false): ?>
-        <input type="text" name="customerName" value="<?= htmlspecialchars($customerName) ?>" readonly><br>
-        <small style="color: #666;">From your account</small><br><br>
+        <input type="hidden" name="customerName" value="<?= htmlspecialchars($customerName) ?>">
+        <input type="hidden" name="customerEmail" value="<?= htmlspecialchars($customerEmail) ?>">
     <?php else: ?>
+        <label>Name</label><br>
         <input type="text" name="customerName" value="<?= htmlspecialchars($customerName ?? '') ?>" required><br><br>
-    <?php endif; ?>
 
-    <label>Email</label><br>
-    <?php if ($isLoggedIn ?? false): ?>
-        <input type="email" name="customerEmail" value="<?= htmlspecialchars($customerEmail) ?>" readonly><br>
-        <small style="color: #666;">From your account</small><br><br>
-    <?php else: ?>
+        <label>Email</label><br>
         <input type="email" name="customerEmail" value="<?= htmlspecialchars($customerEmail ?? '') ?>" required><br><br>
     <?php endif; ?>
 
