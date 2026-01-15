@@ -53,7 +53,10 @@ class AuthorizationController
             'name' => trim($name)
         ];
 
-        header('Location: /minifigures');
+        $returnUrl = $_SESSION['returnUrl'] ?? '/minifigures';
+        unset($_SESSION['returnUrl']);
+
+        header('Location: ' . $returnUrl);
         exit;
     }
 
@@ -86,7 +89,10 @@ class AuthorizationController
         // Set session with authenticated user data
         $_SESSION['user'] = $user;
 
-        header('Location: /minifigures');
+        $returnUrl = $_SESSION['returnUrl'] ?? '/minifigures';
+        unset($_SESSION['returnUrl']);
+
+        header('Location: ' . $returnUrl);
         exit;
     }
 

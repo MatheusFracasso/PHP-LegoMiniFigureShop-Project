@@ -25,6 +25,7 @@ class CheckoutController
         $pageTitle = 'Checkout';
 
         if (!isset($_SESSION['user'])) {
+            $_SESSION['returnUrl'] = '/checkout';
             header('Location: /login');
             exit;
         }
