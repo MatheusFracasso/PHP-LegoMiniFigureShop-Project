@@ -1,0 +1,279 @@
+/* ==========================
+   LEGO Minifigure Shop - Custom Styles
+   Fantasy / Tabletop Inspired Design
+   ========================== */
+
+/* Root Variables */
+:root {
+    --parchment-bg: #f4efe8;
+    --parchment-light: #faf7f2;
+    --dark-stone: #2c2c2c;
+    --dark-stone-hover: #1a1a1a;
+    --gold-accent: #d4af37;
+    --fantasy-red: #8b3a3a;
+    --fantasy-green: #4a7c4e;
+    --shadow-light: rgba(0, 0, 0, 0.08);
+    --shadow-medium: rgba(0, 0, 0, 0.15);
+}
+
+/* Body Background - Parchment Style */
+body {
+    background-color: var(--parchment-bg);
+    background-image: 
+        linear-gradient(90deg, rgba(139, 58, 58, 0.02) 1px, transparent 1px),
+        linear-gradient(rgba(139, 58, 58, 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: var(--dark-stone) !important;
+    box-shadow: 0 2px 8px var(--shadow-medium);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--gold-accent) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+}
+
+.navbar-brand:hover {
+    color: #e8c968 !important;
+}
+
+.navbar-dark .navbar-nav .nav-link,
+.navbar .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar .nav-link:hover {
+    color: var(--gold-accent) !important;
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.85)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    background-color: var(--dark-stone);
+    border: 1px solid var(--gold-accent);
+}
+
+.dropdown-item {
+    color: rgba(255, 255, 255, 0.85);
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: var(--dark-stone-hover);
+    color: var(--gold-accent);
+}
+
+/* Main Container */
+main {
+    min-height: calc(100vh - 200px);
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 12px var(--shadow-light);
+}
+
+/* Card Styling - Minifigure Cards */
+.card {
+    border: 2px solid #d4c5b0 !important;
+    border-radius: 8px;
+    background-color: var(--parchment-light);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-medium) !important;
+    border-color: var(--gold-accent) !important;
+}
+
+.card-img-top {
+    background-color: white;
+    border-bottom: 2px solid #d4c5b0;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-title {
+    color: var(--dark-stone);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-text.text-muted {
+    color: #7a6f5d !important;
+    font-style: italic;
+}
+
+/* Badge for Categories */
+.badge {
+    padding: 0.4rem 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.badge.bg-secondary {
+    background-color: var(--fantasy-red) !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--fantasy-red);
+    border-color: var(--fantasy-red);
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #6b2e2e;
+    border-color: #6b2e2e;
+    transform: scale(1.05);
+}
+
+.btn-success {
+    background-color: var(--fantasy-green);
+    border-color: var(--fantasy-green);
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-success:hover {
+    background-color: #3a5f3e;
+    border-color: #3a5f3e;
+    transform: scale(1.05);
+}
+
+.btn-outline-primary {
+    color: var(--fantasy-red);
+    border-color: var(--fantasy-red);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--fantasy-red);
+    border-color: var(--fantasy-red);
+}
+
+/* Footer Styling */
+footer {
+    background-color: var(--dark-stone);
+    color: rgba(255, 255, 255, 0.85);
+    padding: 2rem 0;
+    margin-top: 3rem;
+    box-shadow: 0 -2px 8px var(--shadow-medium);
+}
+
+footer a {
+    color: var(--gold-accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+footer a:hover {
+    color: #e8c968;
+    text-decoration: underline;
+}
+
+footer small {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Page Headers */
+h1, .display-4 {
+    color: var(--dark-stone);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.text-primary {
+    color: var(--fantasy-red) !important;
+}
+
+/* Search Input */
+.form-control:focus {
+    border-color: var(--gold-accent);
+    box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+}
+
+/* Alert Styling */
+.alert {
+    border-radius: 8px;
+    border-left: 4px solid;
+}
+
+.alert-info {
+    background-color: rgba(74, 124, 78, 0.1);
+    border-left-color: var(--fantasy-green);
+    color: #3a5f3e;
+}
+
+.alert-danger {
+    background-color: rgba(139, 58, 58, 0.1);
+    border-left-color: var(--fantasy-red);
+    color: #6b2e2e;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+/* Shopping Cart Badge (if you add one later) */
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--fantasy-red);
+    color: white;
+    border-radius: 50%;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+/* Accessibility */
+a:focus, button:focus, .btn:focus {
+    outline: 2px solid var(--gold-accent);
+    outline-offset: 2px;
+}
+
+/* Price Styling */
+.price-tag {
+    color: var(--fantasy-red);
+    font-weight: 700;
+    font-size: 1.25rem;
+}

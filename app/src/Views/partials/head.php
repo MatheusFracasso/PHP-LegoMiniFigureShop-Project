@@ -15,6 +15,6 @@ $title =isset($pageTitle) ? $pageTitle : 'LEGO Minifigs';
           integrity="sha384-...your-integrity..."
           crossorigin="anonymous">
 
-   <!-- Your optional custom CSS -->
-        <link rel="stylesheet" href="/assets/style.css">
+   <!-- Custom CSS -->
+        <link rel="stylesheet" href="/assets/css/site.css">
 </head>
