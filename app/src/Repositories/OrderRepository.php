@@ -60,7 +60,6 @@ class OrderRepository implements IOrderRepository
 
             $this->connection->commit();
             return $orderId;
-
         } catch (PDOException $e) {
             $this->connection->rollBack();
             die('Order save failed: ' . $e->getMessage());

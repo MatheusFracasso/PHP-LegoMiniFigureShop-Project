@@ -1,18 +1,19 @@
 <?php
-function euroFromCents(int $cents): string {
+function euroFromCents(int $cents): string
+{
     return '€' . number_format($cents / 100, 2, '.', '');
 }
 ?>
 
 <h1>Checkout</h1>
 
-<?php if (!empty($error)): ?>
+<?php if (!empty($error)) : ?>
     <p style="color:red;"><?= htmlspecialchars($error) ?></p>
 <?php endif; ?>
 
 <h3>Order Summary</h3>
 <ul>
-<?php foreach ($cartItems as $item): ?>
+<?php foreach ($cartItems as $item) : ?>
     <li>
         <?= htmlspecialchars($item['minifigure']->name) ?>
         x <?= (int)$item['quantity'] ?>
@@ -23,17 +24,17 @@ function euroFromCents(int $cents): string {
 
 <p><strong>Total: <?= euroFromCents($totalCents) ?></strong></p>
 
-<?php if ($isLoggedIn ?? false): ?>
+<?php if ($isLoggedIn ?? false) : ?>
     <div style="background-color: #e7f3ff; padding: 10px; border-radius: 4px; margin: 20px 0;">
         <p>✓ Signed in as <strong><?= htmlspecialchars($_SESSION['user']['email']) ?></strong></p>
     </div>
 <?php endif; ?>
 
 <form method="POST" action="/checkout">
-    <?php if ($isLoggedIn ?? false): ?>
+    <?php if ($isLoggedIn ?? false) : ?>
         <input type="hidden" name="customerName" value="<?= htmlspecialchars($customerName) ?>">
         <input type="hidden" name="customerEmail" value="<?= htmlspecialchars($customerEmail) ?>">
-    <?php else: ?>
+    <?php else : ?>
         <label>Name</label><br>
         <input type="text" name="customerName" value="<?= htmlspecialchars($customerName ?? '') ?>" required><br><br>
 
@@ -43,7 +44,7 @@ function euroFromCents(int $cents): string {
 
     <button type="submit">Place Order</button>
 
-    <?php if (!($isLoggedIn ?? false)): ?>
+    <?php if (!($isLoggedIn ?? false)) : ?>
         <p style="margin-top: 15px; color: #666; font-size: 0.9em;">
             <a href="/login">Already have an account? Login here</a>
         </p>

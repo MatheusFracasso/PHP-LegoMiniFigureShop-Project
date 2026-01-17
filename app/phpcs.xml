@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<ruleset name="LegoMiniFigures">
+    <description>PSR-12 coding standard for LegoMiniFigures</description>
+
+    <!-- Use PSR-12 standard -->
+    <rule ref="PSR12"/>
+
+    <!-- Check these folders -->
+    <file>./src</file>
+
+    <!-- Skip vendor folder -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+
+    <!-- Show progress and colors -->
+    <arg value="sp"/>
+    <arg name="colors"/>
+
+    <!-- Show sniff codes in reports -->
+    <arg value="s"/>
+</ruleset>

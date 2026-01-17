@@ -1,12 +1,13 @@
 <?php
-function euroFromCents(int $cents): string {
+function euroFromCents(int $cents): string
+{
     return '€' . number_format($cents / 100, 2, '.', '');
 }
 ?>
 
 <h1>Payment</h1>
 
-<?php if (!empty($error)): ?>
+<?php if (!empty($error)) : ?>
     <p style="color: red; background-color: #ffe6e6; padding: 10px; border-radius: 4px; margin: 20px 0;">
         ❌ <?= htmlspecialchars($error) ?>
     </p>

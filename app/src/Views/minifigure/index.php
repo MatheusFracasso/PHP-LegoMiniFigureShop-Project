@@ -21,7 +21,8 @@
 
     <div class="row g-4" id="minifiguresContainer">
 <?php
-function getImagePath($name) {
+function getImagePath($name)
+{
     // Sanitize name: remove spaces, dashes, and capitalize words
     $sanitized = str_replace([' ', '-'], '', $name);
     // Special case for Jaheira
@@ -31,15 +32,15 @@ function getImagePath($name) {
     return "/images/minifigures/{$sanitized}.png";
 }
 ?>
-<?php if (empty($minifigures)): ?>
+<?php if (empty($minifigures)) : ?>
     <div class="col-12">
         <div class="alert alert-info text-center">
             <h4>No minifigures available</h4>
             <p>Check back soon for new arrivals!</p>
         </div>
     </div>
-<?php else: ?>
-<?php foreach ($minifigures as $fig): ?>
+<?php else : ?>
+    <?php foreach ($minifigures as $fig) : ?>
 <div class="col-12 col-sm-6 col-lg-4 col-xl-3 minifigure-card" 
      data-name="<?= htmlspecialchars(strtolower($fig->name)) ?>" 
      data-category="<?= htmlspecialchars(strtolower($fig->categoryName ?? $fig->category)) ?>">
@@ -72,7 +73,7 @@ function getImagePath($name) {
         </div>
     </div>
 </div>
-<?php endforeach; ?>
+    <?php endforeach; ?>
 <?php endif; ?>
     </div>
 </div>

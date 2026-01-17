@@ -1,10 +1,11 @@
 <?php
-function euroFromCents(int $cents): string {
+function euroFromCents(int $cents): string
+{
     return '€' . number_format($cents / 100, 2, '.', '');
 }
 ?>
 
-<?php if ($isGuest ?? false): ?>
+<?php if ($isGuest ?? false) : ?>
     <!-- Guest checkout confirmation -->
     <div style="background-color: #d4edda; padding: 20px; border-radius: 4px; margin-bottom: 20px;">
         <h1>✅ Order Confirmed</h1>
@@ -18,13 +19,13 @@ function euroFromCents(int $cents): string {
     <p><strong>Status:</strong> 
         <?php
             $statusBadge = '';
-            if ($order['status'] === 'paid') {
-                $statusBadge = '<span style="background-color: #28a745; color: white; padding: 4px 8px; border-radius: 4px;">Paid ✓</span>';
-            } elseif ($order['status'] === 'pending') {
-                $statusBadge = '<span style="background-color: #ffc107; color: black; padding: 4px 8px; border-radius: 4px;">Pending Payment</span>';
-            } elseif ($order['status'] === 'cancelled') {
-                $statusBadge = '<span style="background-color: #dc3545; color: white; padding: 4px 8px; border-radius: 4px;">Cancelled</span>';
-            }
+        if ($order['status'] === 'paid') {
+            $statusBadge = '<span style="background-color: #28a745; color: white; padding: 4px 8px; border-radius: 4px;">Paid ✓</span>';
+        } elseif ($order['status'] === 'pending') {
+            $statusBadge = '<span style="background-color: #ffc107; color: black; padding: 4px 8px; border-radius: 4px;">Pending Payment</span>';
+        } elseif ($order['status'] === 'cancelled') {
+            $statusBadge = '<span style="background-color: #dc3545; color: white; padding: 4px 8px; border-radius: 4px;">Cancelled</span>';
+        }
             echo $statusBadge;
         ?>
     </p>
@@ -32,7 +33,7 @@ function euroFromCents(int $cents): string {
 
     <h3>Items</h3>
     <ul>
-    <?php foreach ($order['items'] as $item): ?>
+    <?php foreach ($order['items'] as $item) : ?>
         <li>
             <?= htmlspecialchars($item['name']) ?>
             x <?= (int)$item['quantity'] ?>
@@ -43,7 +44,7 @@ function euroFromCents(int $cents): string {
 
     <p style="margin-top: 30px;"><a href="/minifigures">Continue Shopping</a></p>
 
-<?php else: ?>
+<?php else : ?>
     <!-- Logged-in user confirmation -->
     <h1>Order Confirmed ✅</h1>
 
@@ -53,13 +54,13 @@ function euroFromCents(int $cents): string {
     <p><strong>Status:</strong> 
         <?php
             $statusBadge = '';
-            if ($order['status'] === 'paid') {
-                $statusBadge = '<span style="background-color: #28a745; color: white; padding: 4px 8px; border-radius: 4px;">Paid ✓</span>';
-            } elseif ($order['status'] === 'pending') {
-                $statusBadge = '<span style="background-color: #ffc107; color: black; padding: 4px 8px; border-radius: 4px;">Pending Payment</span>';
-            } elseif ($order['status'] === 'cancelled') {
-                $statusBadge = '<span style="background-color: #dc3545; color: white; padding: 4px 8px; border-radius: 4px;">Cancelled</span>';
-            }
+        if ($order['status'] === 'paid') {
+            $statusBadge = '<span style="background-color: #28a745; color: white; padding: 4px 8px; border-radius: 4px;">Paid ✓</span>';
+        } elseif ($order['status'] === 'pending') {
+            $statusBadge = '<span style="background-color: #ffc107; color: black; padding: 4px 8px; border-radius: 4px;">Pending Payment</span>';
+        } elseif ($order['status'] === 'cancelled') {
+            $statusBadge = '<span style="background-color: #dc3545; color: white; padding: 4px 8px; border-radius: 4px;">Cancelled</span>';
+        }
             echo $statusBadge;
         ?>
     </p>
@@ -67,7 +68,7 @@ function euroFromCents(int $cents): string {
 
     <h3>Items</h3>
     <ul>
-    <?php foreach ($order['items'] as $item): ?>
+    <?php foreach ($order['items'] as $item) : ?>
         <li>
             <?= htmlspecialchars($item['name']) ?>
             x <?= (int)$item['quantity'] ?>

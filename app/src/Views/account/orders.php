@@ -1,5 +1,6 @@
 <?php
-function euroFromCents(int $cents): string {
+function euroFromCents(int $cents): string
+{
     return '€' . number_format($cents / 100, 2, '.', '');
 }
 ?>
@@ -9,12 +10,12 @@ function euroFromCents(int $cents): string {
         <div class="col-12">
             <h1 class="mb-4">My Orders</h1>
 
-            <?php if (empty($orders)): ?>
+            <?php if (empty($orders)) : ?>
                 <div class="alert alert-info">
                     <p>You haven't placed any orders yet.</p>
                     <a href="/minifigures" class="btn btn-primary">Continue Shopping</a>
                 </div>
-            <?php else: ?>
+            <?php else : ?>
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead>
@@ -26,7 +27,7 @@ function euroFromCents(int $cents): string {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($orders as $order): ?>
+                            <?php foreach ($orders as $order) : ?>
                                 <tr>
                                     <td>#<?= (int)$order['id'] ?></td>
                                     <td><?= htmlspecialchars($order['createdAt']) ?></td>

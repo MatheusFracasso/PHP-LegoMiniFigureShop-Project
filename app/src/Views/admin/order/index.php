@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($orders as $order): ?>
+        <?php foreach ($orders as $order) : ?>
         <tr>
             <td><?= $order['id'] ?></td>
             <td><?= htmlspecialchars($order['customerName']) ?></td>
@@ -22,11 +22,11 @@
                 <?php
                     $status = $order['status'] ?? 'pending';
                     $badgeClass = 'warning';
-                    if ($status === 'paid') {
-                        $badgeClass = 'success';
-                    } elseif ($status === 'cancelled') {
-                        $badgeClass = 'danger';
-                    }
+                if ($status === 'paid') {
+                    $badgeClass = 'success';
+                } elseif ($status === 'cancelled') {
+                    $badgeClass = 'danger';
+                }
                 ?>
                 <span class="badge bg-<?= $badgeClass ?>">
                     <?= ucfirst($status) ?>

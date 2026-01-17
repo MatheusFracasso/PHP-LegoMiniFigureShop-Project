@@ -31,7 +31,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($order['items'] as $item): ?>
+        <?php foreach ($order['items'] as $item) : ?>
         <tr>
             <td><?= htmlspecialchars($item['name']) ?></td>
             <td><?= $item['quantity'] ?></td>

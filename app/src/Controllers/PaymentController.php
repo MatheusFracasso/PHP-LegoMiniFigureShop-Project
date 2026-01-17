@@ -48,7 +48,8 @@ class PaymentController
             return;
         }
 
-        function euroFromCents(int $cents): string {
+        function euroFromCents(int $cents): string
+        {
             return '€' . number_format($cents / 100, 2, '.', '');
         }
 
@@ -96,7 +97,8 @@ class PaymentController
         if (empty($cardNumber) || empty($cvv)) {
             $error = 'Please fill in all payment details';
             $pageTitle = 'Payment';
-            function euroFromCents(int $cents): string {
+            function euroFromCents(int $cents): string
+            {
                 return '€' . number_format($cents / 100, 2, '.', '');
             }
             $totalEuros = euroFromCents((int)$order['totalCents']);
@@ -126,7 +128,8 @@ class PaymentController
             // Payment failed - show error message
             $error = 'Payment declined. Please try again.';
             $pageTitle = 'Payment';
-            function euroFromCents(int $cents): string {
+            function euroFromCents(int $cents): string
+            {
                 return '€' . number_format($cents / 100, 2, '.', '');
             }
             $totalEuros = euroFromCents((int)$order['totalCents']);

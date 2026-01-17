@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($minifigures as $fig): ?>
+        <?php foreach ($minifigures as $fig) : ?>
         <tr>
             <td><?= $fig->id ?></td>
             <td><?= htmlspecialchars($fig->name) ?></td>

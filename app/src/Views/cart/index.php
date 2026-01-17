@@ -11,12 +11,12 @@ function euroFromCents(int $cents): string
 <div class="container py-5">
     <h1 class="mb-4">Your Cart</h1>
 
-    <?php if (empty($cartItems)): ?>
+    <?php if (empty($cartItems)) : ?>
         <div class="alert alert-info">
             <h4>Your cart is empty.</h4>
             <p><a href="/minifigures" class="btn btn-primary">Start Shopping</a></p>
         </div>
-    <?php else: ?>
+    <?php else : ?>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -29,7 +29,7 @@ function euroFromCents(int $cents): string
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($cartItems as $item): ?>
+                <?php foreach ($cartItems as $item) : ?>
                     <?php $fig = $item['minifigure']; ?>
                     <tr>
                         <td><?= htmlspecialchars($fig->name) ?></td>

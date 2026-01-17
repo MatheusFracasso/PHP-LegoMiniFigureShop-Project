@@ -10,7 +10,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($users as $user): ?>
+        <?php foreach ($users as $user) : ?>
         <tr>
             <td><?= $user['id'] ?></td>
             <td><?= htmlspecialchars($user['name']) ?></td>

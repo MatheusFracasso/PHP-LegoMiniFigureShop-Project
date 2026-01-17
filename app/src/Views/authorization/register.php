@@ -1,6 +1,6 @@
 <h1>Register</h1>
 
-<?php if (!empty($error)): ?>
+<?php if (!empty($error)) : ?>
     <p style="color:red;"><?= htmlspecialchars($error) ?></p>
 <?php endif; ?>
 

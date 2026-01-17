@@ -23,14 +23,14 @@
           </li>
         </ul>
         <ul class="navbar-nav">
-          <?php if (isset($_SESSION['user'])): ?>
+          <?php if (isset($_SESSION['user'])) : ?>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <?= htmlspecialchars($_SESSION['user']['email']) ?>
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <li><a class="dropdown-item" href="/my-orders">My Orders</a></li>
-                <?php if ($_SESSION['user']['role'] === 'admin'): ?>
+                <?php if ($_SESSION['user']['role'] === 'admin') : ?>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="/admin">Admin Panel</a></li>
                 <?php endif; ?>
@@ -42,7 +42,7 @@
                 </li>
               </ul>
             </li>
-          <?php else: ?>
+          <?php else : ?>
             <li class="nav-item">
               <a class="nav-link" href="/login">Login</a>
             </li>

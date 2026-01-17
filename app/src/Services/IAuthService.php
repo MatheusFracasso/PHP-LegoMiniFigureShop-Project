@@ -6,7 +6,7 @@ interface IAuthService
 {
     /**
      * Validate registration input (checks empty fields, password match, duplicate email).
-     * 
+     *
      * @return string|null Error message if invalid, null if valid
      */
     public function validateRegistration(string $email, string $password, string $password2, string $name): ?string;
