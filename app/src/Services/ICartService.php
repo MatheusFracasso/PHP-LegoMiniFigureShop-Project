@@ -2,40 +2,21 @@
 
 namespace App\Services;
 
+// Shopping cart operations
 interface ICartService
 {
-    /**
-     * Get cart items enriched with product data and calculated totals.
-     *
-     * @param array $sessionCart The cart array from $_SESSION['cart']
-     * @return array Array with 'items' and 'totalCents' (in cents)
-     */
+    // Get cart with totals calculated
     public function getCartWithTotals(array $sessionCart): array;
 
-    /**
-     * Add a product to the cart (or increment quantity if already present).
-     *
-     * @param int $productId
-     */
+    // Add item to cart (or increase qty)
     public function addToCart(int $productId): void;
 
-    /**
-     * Remove a product from the cart.
-     *
-     * @param int $productId
-     */
+    // Remove item from cart
     public function removeFromCart(int $productId): void;
 
-    /**
-     * Update quantity for a product. If quantity is 0 or negative, removes the item.
-     *
-     * @param int $productId
-     * @param int $quantity
-     */
+    // Update quantity (if 0 or negative, removes item)
     public function updateQuantity(int $productId, int $quantity): void;
 
-    /**
-     * Clear the entire cart.
-     */
+    // Clear entire cart
     public function clearCart(): void;
 }

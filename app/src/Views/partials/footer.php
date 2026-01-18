@@ -21,13 +21,6 @@
           <a href="/cart">Cart</a>
         </nav>
       </div>
-      <div class="col-md-3 text-center">
-        <h6 class="text-white mb-3">Information</h6>
-        <nav aria-label="footer information" class="d-flex flex-column">
-          <a href="/privacy" class="mb-2">Privacy Policy</a>
-          <a href="/accessibility">Accessibility</a>
-        </nav>
-      </div>
     </div>
   </div>
 </footer>

@@ -12,7 +12,6 @@ class MinifigureService implements IMinifigureService
         $this->repository = new MiniFigureRepository();
     }
 
-    /** @return MiniFigure[] */
     public function getAllMinifigures(): array
     {
         return $this->repository->getAll();

@@ -50,7 +50,7 @@ INSERT INTO categories (name) VALUES ('Heroes'), ('Spellcasters'), ('Legends');
 
 INSERT INTO minifigures (name, priceCents, categoryId, imageUrl, description) VALUES
 ('TheLadyOfPain',      620, 3, '/images/minifigures/TheLadyOfPain.png',      'Mysterious ruler who floats silently, face masked with blades.'),
-('aheirInspiredDruid', 500, 2, '/images/minifigures/aheirInspiredDruid.png', 'Nature sage who commands vines and storms.'),
+('JaheiraInspiredDruid', 500, 2, '/images/minifigures/JaheiraInspiredDruid.png', 'Nature sage who commands vines and storms.'),
 ('HalflingDruid',      470, 2, '/images/minifigures/HalflingDruid.png',      'Cheerful guardian who shapeshifts into woodland beasts.'),
 ('TashaTheWitchQueen', 610, 3, '/images/minifigures/TashaTheWitchQueen.png', 'Legendary witch queen wielding playful yet deadly curses.'),
 ('TieflingSorcerer',   560, 2, '/images/minifigures/TieflingSorcerer.png',   'Infernal-blooded caster channeling raw arcane power.'),

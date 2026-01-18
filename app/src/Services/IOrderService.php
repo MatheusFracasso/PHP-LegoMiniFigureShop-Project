@@ -2,16 +2,9 @@
 
 namespace App\Services;
 
+// Order creation logic
 interface IOrderService
 {
-    /**
-     * Create an order from the current session cart.
-     * Returns order ID on success, error array on failure.
-     *
-     * @param int|null $userId User ID (null for guest checkout)
-     * @param string $customerName
-     * @param string $customerEmail
-     * @return int|array Order ID or ['error' => 'message']
-     */
+    // Create order from cart, returns order ID or error array
     public function createOrderFromCart(?int $userId, string $customerName, string $customerEmail): int|array;
 }

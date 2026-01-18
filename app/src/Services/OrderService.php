@@ -32,7 +32,8 @@ class OrderService implements IOrderService
             return ['error' => 'Your cart is empty.'];
         }
 
-        // Rebuild cart with current prices to prevent tampering
+        // Rebuild cart with current prices from database
+        // This prevents someone from tampering with session prices
         $items = [];
         $totalCents = 0;
 

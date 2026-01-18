@@ -8,9 +8,8 @@
     <p class="lead"><?= htmlspecialchars($minifigure->description) ?></p>
     <p class="h4 mt-3"><?= htmlspecialchars($minifigure->priceEuro()) ?></p>
 
-    <form method="post" action="/cart/add">
-      <input type="hidden" name="id" value="<?= (int)$minifigure->id ?>">
-      <button class="btn btn-success mt-3" type="submit">Adicionar ao carrinho</button>
+    <form method="post" action="/cart/add/<?= (int)$minifigure->id ?>">
+      <button class="btn btn-success mt-3" type="submit">🛍️ Add to Cart</button>
     </form>
   </div>
 </article>

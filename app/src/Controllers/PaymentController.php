@@ -108,35 +108,11 @@ class PaymentController
             return;
         }
 
-        // Simulate payment processing - 90% success rate
-        $success = rand(1, 10) <= 10; // force success for demo
+        // Process payment (always succeeds in demo)
+        $this->orderRepo->updateOrderStatus($orderId, 'paid');
 
-        if ($success) {
-            // Update order status to 'paid'
-            $this->orderRepo->updateOrderStatus($orderId, 'paid');
-
-            // Clear guest order info if applicable
-            if ($isJustPlacedGuest) {
-                unset($_SESSION['guestOrderId']);
-                unset($_SESSION['guestOrderEmail']);
-            }
-
-            // Redirect to confirmation page
-            header('Location: /order/' . $orderId);
-            exit;
-        } else {
-            // Payment failed - show error message
-            $error = 'Payment declined. Please try again.';
-            $pageTitle = 'Payment';
-            function euroFromCents(int $cents): string
-            {
-                return '€' . number_format($cents / 100, 2, '.', '');
-            }
-            $totalEuros = euroFromCents((int)$order['totalCents']);
-            $orderId = $orderId;
-            $contentView = __DIR__ . '/../Views/payment/index.php';
-            require __DIR__ . '/../Views/layout/main.php';
-            return;
-        }
+        // Redirect to confirmation page (session cleanup happens there)
+        header('Location: /order/' . $orderId);
+        exit;
     }
 }

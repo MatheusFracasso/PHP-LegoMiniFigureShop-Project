@@ -20,9 +20,6 @@ class OrderRepository implements IOrderRepository
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    /**
-     * @param array<int, array<string,int>> $items
-     */
     public function createOrder(string $customerName, string $customerEmail, int $totalCents, array $items, ?int $userId = null): int
     {
         try {

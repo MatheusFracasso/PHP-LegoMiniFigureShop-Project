@@ -20,18 +20,6 @@
     </div>
 
     <div class="row g-4" id="minifiguresContainer">
-<?php
-function getImagePath($name)
-{
-    // Sanitize name: remove spaces, dashes, and capitalize words
-    $sanitized = str_replace([' ', '-'], '', $name);
-    // Special case for Jaheira
-    if (strpos($name, 'Jaheira') !== false) {
-        $sanitized = 'JaheiraInspiredDruid'; // matches filename
-    }
-    return "/images/minifigures/{$sanitized}.png";
-}
-?>
 <?php if (empty($minifigures)) : ?>
     <div class="col-12">
         <div class="alert alert-info text-center">
@@ -45,9 +33,8 @@ function getImagePath($name)
      data-name="<?= htmlspecialchars(strtolower($fig->name)) ?>" 
      data-category="<?= htmlspecialchars(strtolower($fig->categoryName ?? $fig->category)) ?>">
     <div class="card h-100 shadow-sm">
-        <?php $imagePath = getImagePath($fig->name); ?>
         <div class="position-relative">
-            <img src="<?= htmlspecialchars($imagePath) ?>"
+            <img src="<?= htmlspecialchars($fig->imageUrl) ?>"
                  alt="<?= htmlspecialchars($fig->name) ?>"
                  class="card-img-top"
                  style="object-fit: cover; height: 220px;">

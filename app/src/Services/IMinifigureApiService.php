@@ -2,12 +2,9 @@
 
 namespace App\Services;
 
+// API response formatting for minifigures
 interface IMinifigureApiService
 {
-    /**
-     * Get all minifigures formatted for API response.
-     *
-     * @return array Array of minifigures with formatted fields for JSON
-     */
+    // Get minifigures formatted for JSON API
     public function getMinifiguresForApi(): array;
 }

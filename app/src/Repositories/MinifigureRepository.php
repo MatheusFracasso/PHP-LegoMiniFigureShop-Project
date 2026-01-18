@@ -31,7 +31,7 @@ class MiniFigureRepository implements IMiniFigureRepository
             die("Database connection failed: " . $e->getMessage());
         }
     }
-    /** @return MiniFigure[] */
+    
     public function getAll(): array
     {
         $sql = '

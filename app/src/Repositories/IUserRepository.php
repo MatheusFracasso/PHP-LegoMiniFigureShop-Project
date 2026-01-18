@@ -2,48 +2,21 @@
 
 namespace App\Repositories;
 
+// User database operations
 interface IUserRepository
 {
-    /**
-     * Find a user by email address.
-     *
-     * @param string $email The email to search for
-     * @return array|null User data or null if not found
-     */
+    // Find user by email
     public function findByEmail(string $email): ?array;
 
-    /**
-     * Create a new user in the database.
-     *
-     * @param string $email User email (unique)
-     * @param string $passwordHash Hashed password
-     * @param string $role User role (user or admin)
-     * @param string $name Full name
-     * @return int The ID of the newly created user
-     */
+    // Create new user, returns user ID
     public function createUser(string $email, string $passwordHash, string $role = 'user', string $name = ''): int;
 
-    /**
-     * Find a user by ID.
-     *
-     * @param int $id The user ID
-     * @return array|null User data or null if not found
-     */
+    // Find user by ID
     public function findById(int $id): ?array;
 
-    /**
-     * Get all users.
-     *
-     * @return array List of all users
-     */
+    // Get all users
     public function getAllUsers(): array;
 
-    /**
-     * Update a user's role.
-     *
-     * @param int $id The user ID
-     * @param string $role New role (user or admin)
-     * @return bool True if update was successful, false otherwise
-     */
+    // Update user's role (user or admin)
     public function updateRole(int $id, string $role): bool;
 }

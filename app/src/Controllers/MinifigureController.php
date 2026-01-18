@@ -22,7 +22,6 @@ class MinifigureController
     }
 
     //GET shop (list all minifigures)
-    /** @return MiniFigure[] */
     public function index (array $parameters = []): void
     {
         $pageTitle = "Shop - All Mini Figures";

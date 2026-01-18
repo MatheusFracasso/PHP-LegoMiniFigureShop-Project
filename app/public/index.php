@@ -1,16 +1,10 @@
 <?php
 session_start();
 
-/**
- * This is the central route handler of the application.
- * It uses FastRoute to map URLs to controller methods.
- * 
- * See the documentation for FastRoute for more information: https://github.com/nikic/FastRoute
- */
+// Main router - maps URLs to controller methods using FastRoute
+require __DIR__ . '/../vendor/autoload.php';
 
-require __DIR__ . '/../vendor/autoload.php';//FastRoute available
-
-//Session for cart/login
+// Make sure session is started for cart/login
 if (session_status()===PHP_SESSION_NONE){
     session_start();
 }
@@ -18,9 +12,7 @@ if (session_status()===PHP_SESSION_NONE){
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
 
-/**
- * Define the routes for the application.
- */
+// Route definitions - map URLs to controllers
 $dispatcher = simpleDispatcher(function (RouteCollector $r) {
   // Home
   $r->addRoute('GET', '/', ['App\Controllers\HomeController', 'home']);

@@ -34,6 +34,7 @@ class CartController
 
         $this->cartService->addToCart($id);
 
+        // Redirect back to cart page so user sees updated cart
         header('Location: /cart');
         exit;
     }
