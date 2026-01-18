@@ -1,10 +1,9 @@
 <?php
 session_start();
 
-// Main router - maps URLs to controller methods using FastRoute
 require __DIR__ . '/../vendor/autoload.php';
 
-// Make sure session is started for cart/login
+// Double-check session is started
 if (session_status()===PHP_SESSION_NONE){
     session_start();
 }
@@ -12,7 +11,7 @@ if (session_status()===PHP_SESSION_NONE){
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
 
-// Route definitions - map URLs to controllers
+// Setup routes
 $dispatcher = simpleDispatcher(function (RouteCollector $r) {
   // Home
   $r->addRoute('GET', '/', ['App\Controllers\HomeController', 'home']);
@@ -73,38 +72,33 @@ $r->addRoute('POST', '/admin/users/role/{id:\d+}', ['App\Controllers\AdminUserCo
 $r->addRoute('GET', '/api/minifigures', ['App\Controllers\Api\MinifigureApiController', 'index']);
 
 });
-// Get the request method and URI from the server variables and invoke the dispatcher
+
+// Get request info
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
 
-//ask the router to find a matching route
+// Find matching route
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 
-// Switch on the dispatcher result and call the appropriate controller method if found
 switch ($routeInfo[0]) {
-    // Handle not found routes
     case FastRoute\Dispatcher::NOT_FOUND:
         http_response_code(404);
         echo 'Not Found';
         break;
-    // Handle routes that were invoked with the wrong HTTP method
+        
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         http_response_code(405);
         echo 'Method Not Allowed';
         break;
-    // Handle found routes
+        
     case FastRoute\Dispatcher::FOUND:
-    //routeInfo[1] = ['App\Controllers\HomeController', 'home']
-    $className = $routeInfo[1][0];
-    $methodName = $routeInfo[1][1];
-
-    //Route parameters  /hello{name}
-    $parameters =$routeInfo[2];
-
-    //Controller class dynamic initiciation
-    $controller = new $className();
-
-    //call the method with route parameters
-    $controller->$methodName($parameters);
+        // Get controller and method from route
+        $className = $routeInfo[1][0];
+        $methodName = $routeInfo[1][1];
+        $parameters = $routeInfo[2]; // URL params like {id}
+        
+        // Create controller and call the method
+        $controller = new $className();
+        $controller->$methodName($parameters);
         break;
 }
