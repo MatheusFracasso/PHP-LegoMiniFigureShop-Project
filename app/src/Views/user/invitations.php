@@ -20,7 +20,7 @@
         <?php else: ?>
             <?php foreach ($invitations as $invitation) : ?>
             <tr>
-                <td><?= $invitation['id'] ?></td>
+                <td><?= htmlspecialchars($invitation['id']) ?></td>
                 <td><?= htmlspecialchars($invitation['invitedByName']) ?> (<?= htmlspecialchars($invitation['invitedByEmail']) ?>)</td>
                 <td>
                     <?php

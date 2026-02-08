@@ -74,7 +74,13 @@ class InvitationRepository implements IInvitationRepository
 
     public function updateStatus(int $id, string $status): bool
     {
-        $sql = 'UPDATE invitations SET status = :status, acceptedAt = NOW() WHERE id = :id';
+        if ($status === 'accepted') {
+            $sql = 'UPDATE invitations SET status = :status, acceptedAt = NOW() WHERE id = :id';
+        } elseif ($status === 'rejected') {
+            $sql = 'UPDATE invitations SET status = :status, acceptedAt = NULL WHERE id = :id';
+        } else {
+            $sql = 'UPDATE invitations SET status = :status WHERE id = :id';
+        }
         $stmt = $this->connection->prepare($sql);
         $stmt->execute(['id' => $id, 'status' => $status]);
         return $stmt->rowCount() > 0;
