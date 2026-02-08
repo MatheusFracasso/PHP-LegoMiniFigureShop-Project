@@ -45,6 +45,17 @@ CREATE TABLE orderItems (
     FOREIGN KEY (minifigureId) REFERENCES minifigures(id)
 );
 
+CREATE TABLE invitations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    invitedBy INT NOT NULL,
+    status ENUM('pending', 'accepted', 'rejected') DEFAULT 'pending',
+    token VARCHAR(255) UNIQUE NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    acceptedAt TIMESTAMP NULL,
+    FOREIGN KEY (invitedBy) REFERENCES users(id) ON DELETE CASCADE
+);
+
 -- Insert some sample data
 INSERT INTO categories (name) VALUES ('Heroes'), ('Spellcasters'), ('Legends');
 
