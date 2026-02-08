@@ -30,7 +30,6 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <li><a class="dropdown-item" href="/my-orders">My Orders</a></li>
-                <li><a class="dropdown-item" href="/my-invitations">My Invitations</a></li>
                 <?php if ($_SESSION['user']['role'] === 'admin') : ?>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="/admin">Admin Panel</a></li>

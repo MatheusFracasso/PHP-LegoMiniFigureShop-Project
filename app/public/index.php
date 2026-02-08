@@ -45,7 +45,6 @@ $dispatcher = simpleDispatcher(function (RouteCollector $r) {
 
   // User Account
   $r->addRoute('GET', '/my-orders', ['App\Controllers\UserOrderController', 'myOrders']);
-  $r->addRoute('GET', '/my-invitations', ['App\Controllers\UserInvitationController', 'myInvitations']);
 
   // Admin dashboard
 $r->addRoute('GET', '/admin', ['App\Controllers\AdminController', 'dashboard']);
@@ -68,11 +67,6 @@ $r->addRoute('POST', '/admin/orders/{id:\d+}/delete', ['App\Controllers\AdminOrd
 // Admin users (role switching)
 $r->addRoute('GET',  '/admin/users', ['App\Controllers\AdminUserController', 'index']);
 $r->addRoute('POST', '/admin/users/role/{id:\d+}', ['App\Controllers\AdminUserController', 'changeRole']);
-
-// Admin invitations
-$r->addRoute('GET',  '/admin/invitations', ['App\Controllers\AdminInvitationController', 'index']);
-$r->addRoute('GET',  '/admin/invitations/create', ['App\Controllers\AdminInvitationController', 'create']);
-$r->addRoute('POST', '/admin/invitations/send', ['App\Controllers\AdminInvitationController', 'send']);
 
 // API
 $r->addRoute('GET', '/api/minifigures', ['App\Controllers\Api\MinifigureApiController', 'index']);
